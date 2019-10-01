@@ -73,5 +73,9 @@ Features:
 
 
 
+# TODO
 
-
+* [ ] refamiliarize myself with feathersjs
+* [ ] start thinking about database design/api design
+* [ ] once we have a solid api design, start coding/testing
+* [ ] once api design is "done", start on frontend work
