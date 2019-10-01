@@ -48,6 +48,54 @@ If the user is logged in, allow them to see all of their created characters as w
    This is the screen that will allow users to create a party. A party must have a name and when created will generate a unique link for users to join.
 
 
+
+
+# Folder Structure
+
+## Src
+
+### containers
+    Any component that either renders/implements components but is not its own page or A component that renders multiple pages (I.E App)
+    - containers/
+        - App/
+            App.js
+            etc
+### pages
+    A complete page.
+    - pages/
+        characterCreationPage.js
+        authPage.js
+        partyPage.js
+        partyCreationPage.js
+        etc
+### components
+    A React component that is used in multiple places
+    - components/
+        header.js
+        sidebar.js
+        login.js
+        etc
+### feather
+    Any code related to feathersjs
+    - feather/
+        feathers.js
+### actions
+    Redux actions
+
+### reducers
+    Redux reducers
+
+### api
+    code to handle api calls
+    Unclear if featherjs calls will go here?
+    For sure third party calls will
+    - api/
+        - characters/
+            - creation.js
+            - update.js
+            etc
+        etc
+        
 ## Available Scripts
 
 In the project directory, you can run:
