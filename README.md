@@ -1,6 +1,7 @@
 # cypress-dnd-project
 Web-based DND character creator and adventure tracker
 
+# Basic Info
 
 ## Frontend:
 
@@ -21,6 +22,8 @@ Should be able to save a charcter and retrieve it
 
 ## Strech Goal:
 Multiplayer party. Create a charcter and then join a party. Completely online based. With rolls, attacks, etc, etc
+
+# Design
 
 ## Frontend design:
 
