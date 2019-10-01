@@ -38,7 +38,7 @@ Update user
 Get user
 
 ## Party service
-Create party - create a party for the current user. Pass in name and generate link
+Create party - create a party for the current user. Pass in name and generate link using shortid. Link will be added to the database
 Delete party
 Edit party
 Get party
