@@ -18,6 +18,8 @@ UPDATE /character/{id} - this endpoint will update the character info
 
 DELETE /character/{id] - self explanitory. This endpoint will delete a character
 
+POST /character/{id}/export - export character into some reusuable format
+
 ## User endpoints
 
 POST /user - endpoint to add a new user to the db
@@ -60,3 +62,11 @@ Reason for this would be that the party members shouldn't be privy to all info o
 7. A user can update characters
 8. A user can share characters
 9. A user can copy a character
+
+
+## Thoughts
+
+Does a character have to be in a party in order to track stats?
+How easy should it be to create a character and just track stats? We don't want a user to have to go through a bunch of hoops in order to do so.
+
+More thoughts to come....
