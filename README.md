@@ -75,7 +75,11 @@ Features:
 
 # TODO
 
-* [ ] refamiliarize myself with feathersjs: Look at https://morioh.com/p/501eca468173
+* [x] refamiliarize myself with feathersjs: Look at https://morioh.com/p/501eca468173
 * [ ] start thinking about database design/api design
 * [ ] once we have a solid api design, start coding/testing
 * [ ] once api design is "done", start on frontend work
+* [ ] decide how to handle http://www.dnd5eapi.co/ requests
+* [ ] implement basic login/signup
+* [ ] write code to handle http://www.dnd5eapi.co/ requests and parse correct data
+* [ ] start on character creation page
