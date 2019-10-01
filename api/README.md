@@ -10,9 +10,13 @@
 
 **We could have temp characters though, for sharing purposes**
 Create character - create character for the current user
+
 find character - find character owned by current user with whatever query params
+
 Update character
+
 Delete character
+
 Get character
 
 ### Character object/model
@@ -33,18 +37,26 @@ Will have to think about this. Not sure the level of granularity that featherjs 
 
 ## User service
 Create user - create a user
+
 Delete user
+
 Update user
+
 Get user
 
 ## Party service
 Create party - create a party for the current user. Pass in name and generate link using shortid. Link will be added to the database
+
 Delete party
+
 Edit party
+
 Get party
+
 find party - find party owned by or containing current user with whatever query params
 
 Permission levels for party:
+
 Admin - the creator of the party: Normally a DM
 
 Member - A member of the party - There may be instances that a party member can see certain info. That may be decided by the DM. Or that member will have a note section for info that they learn
