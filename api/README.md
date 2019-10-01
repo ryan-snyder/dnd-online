@@ -1,45 +1,44 @@
-# Endpoints for node.js backend api
+# Featherjs Services and appropiate methods
 
-## Character creation endpoint
+**For services: featherjs provides default methods that should handle the majority of cases**
+
+**Any method that will override will have additional explaniation**
+
+## Character service
 
 **Should only create a character in the db on a save**
 
 **We could have temp characters though, for sharing purposes**
+Create character - create character for the current user
+find character - find character owned by current user with whatever query params
+Update character
+Delete character
+Get character
 
+### Character object/model
+* Character
+  * Class
+  * Level
+  * Race
+  * Stats
+  * Health
+  * Actions
+  * Spells (if any)
+  * Equipment/loot
+* the user that owns it
 
-GET/POST /character/new or /character This endpoint will return the basic template for a new character 
-**Note this may not be neccesary**
+## User service
+Create user - create a user
+Delete user
+Update user
+Get user
 
-PUT /character - this endpoint will save a character in the db. We should pass in an accountId, characterId, and the character data
-
-POST /character/{id} - this endpoint will get a character that is owned by the retriever
-
-UPDATE /character/{id} - this endpoint will update the character info
-
-DELETE /character/{id] - self explanitory. This endpoint will delete a character
-
-POST /character/{id}/export - export character into some reusuable format
-
-## User endpoints
-
-POST /user - endpoint to add a new user to the db
-
-POST /user/character - return all characters for that user
-
-DELETE /user/{id} - delete user completely - including characters/etc...
-
-POST /user/party - return all parties this user belongs too
-
-
-## Party endpoints
-
-PUT /party - create a new party for a user and generate an invite link
-
-POST /party - add a user and their character to the party
-
-POST /party/{id} - get info on a party. Depending on who is accessing this, return different info
-
-POST /party/{id}/{memberId} - get/add info about a specific party member: This can include notes, stat changes, etc
+## Party service
+Create party - create a party for the current user. Pass in name and generate link
+Delete party
+Edit party
+Get party
+find party - find party owned by or containing current user with whatever query params
 
 Permission levels for party:
 Admin - the creator of the party: Normally a DM
