@@ -28,16 +28,21 @@ Uses featherjs for auth and communicating with our api
 # Pages
 
 ## Main Page
+
     The main page will connect to our backend and check to see if we're logged in. If we're not logged in, then show the character creation screen
     If we are logged in, then show either the last page they were on, or give them the various options to choose from
 
 ## Character creation screen
+
     The character creation screen will allow users to create a character using the allowable options. If the user is not logged in and they try to save a character, we will prompt them to either create an account or login. We may add the option to save it temporarily. 
     The character creation screen will show the current stats for the character and will update as needed 
     If the user is logged in, allow them to see all of their created characters as well. In a sidebar probably
 ## Party screen
+
     This screen will allow users to view existing parties and create a new party. If the user is not logged in, we will prompt them to create an account or login. This screen will by default show all of the users parties if their are any and will have a button to create a new party. This will have a list of all parties and the appropriate buttons to edit, delete the party
+
 ## Party Creation screen
+
     This is the screen that will allow users to create a party. A party must have a name and when created will generate a unique link for users to join.
 
 
