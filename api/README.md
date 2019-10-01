@@ -40,6 +40,8 @@ Create user - create a user
 
 Delete user
 
+**We should probably move this to thoughts?**
+**not that it really matters**
 Update user - when we call an update we will send the request like so:
 
 {
