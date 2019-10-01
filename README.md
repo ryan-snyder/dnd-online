@@ -72,9 +72,10 @@ Features:
   
 # NPM Modules
 * [roll parser for generating rolls](https://www.npmjs.com/package/roll-parser)
-
 * [Possible API for spells and whatnot?](http://www.dnd5eapi.co/)
 * [featherjs for realtime stat tracking?](https://docs.feathersjs.com/)
+* [material-ui](https://www.npmjs.com/package/@material-ui/core)
+* [Icons](https://github.com/game-icons/icons)
 
 
 
