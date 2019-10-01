@@ -54,6 +54,7 @@ Features:
 
   ## Frontend:
    * reactjs
+   * redux
    * yarn
   ## Backend
    * nodejs
@@ -63,6 +64,7 @@ Features:
   * real-time updates
   * Possibility to handle online sessions
   * Easy to use/setup
+  * Built in auth: Will be useful for accessing endpoints
   
   Cons:
   * Uneccesary?
