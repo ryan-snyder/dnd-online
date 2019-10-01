@@ -47,9 +47,31 @@ Features:
 * handle any auth req.
 * Multiplayer sessions (using featherjs or something similar)
 
-## NPM Modules
+# Tools/frameworks
+
+  ## Frontend:
+   * reactjs
+   * yarn
+  ## Backend
+   * nodejs
+   * express/featherjs
+  ### Pros and cons for featherjs
+  Pros:
+  * real-time updates
+  * Possibility to handle online sessions
+  * Easy to use/setup
+  
+  Cons:
+  * Uneccesary?
+  * Only really useful for real-time updates which will probably be needed less than half the time
+  
+# NPM Modules
 * [roll parser for generating rolls](https://www.npmjs.com/package/roll-parser)
 
 * [Possible API for spells and whatnot?](http://www.dnd5eapi.co/)
+* [featherjs for realtime stat tracking?](https://docs.feathersjs.com/)
+
+
+
 
 
