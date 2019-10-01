@@ -47,3 +47,8 @@ Features:
 * handle any auth req.
 * Multiplayer sessions (using featherjs or something similar)
 
+## NPM Modules
+[roll parser for generating rolls](https://www.npmjs.com/package/roll-parser)
+[Possible API for spells and whatnot?](http://www.dnd5eapi.co/)
+
+
