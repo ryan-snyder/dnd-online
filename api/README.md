@@ -5,7 +5,10 @@
 **Should only create a character in the db on a save**
 
 **We could have temp characters though, for sharing purposes**
-GET/POST /character/new - This endpoint will return the basic template for a new character **Note this may not be neccesary**
+
+
+GET/POST /character/new or /character This endpoint will return the basic template for a new character 
+**Note this may not be neccesary**
 
 PUT /character - this endpoint will save a character in the db. We should pass in an accountId, characterId, and the character data
 
@@ -38,9 +41,11 @@ POST /party/{id}/{memberId} - get/add info about a specific party member: This c
 
 Permission levels for party:
 Admin - the creator of the party: Normally a DM
-Member - A member of the party - There may be instances that a party member can see certain info. That may be decided by the DM.
-         Or that member will have a note section for info that they learn
+
+Member - A member of the party - There may be instances that a party member can see certain info. That may be decided by the DM. Or that member will have a note section for info that they learn
+
 We could have a party specific endpoint for character info.
+
 Reason for this would be that the party members shouldn't be privy to all info on a character
 
 
