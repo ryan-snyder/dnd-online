@@ -59,16 +59,9 @@ Features:
   ## Backend
    * nodejs
    * express/featherjs
-  ### Pros and cons for featherjs
-  Pros:
-  * real-time updates
-  * Possibility to handle online sessions
-  * Easy to use/setup
-  * Built in auth: Will be useful for accessing endpoints
-  
-  Cons:
-  * Uneccesary?
-  * Only really useful for real-time updates which will probably be needed less than half the time
+  ### Note
+  Still on the fence about using featherjs but since I'm familar with it and it would come in handy for auth and so on
+  I will give it a shot
   
 # NPM Modules
 * [roll parser for generating rolls](https://www.npmjs.com/package/roll-parser)
