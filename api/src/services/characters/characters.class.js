@@ -3,6 +3,9 @@ const { Service } = require('feathers-nedb');
 exports.Characters = class Characters extends Service {
   // When a new character is **SAVED**
   // add that character to the database with the associated data/userId
+  // as well call user.update and add it to the users characters with the name of the character
+  // and the uniqueId of the character
+  // Or do we call this from the user class?
   create(data, params) {
     const { character} = data;
     const { user } = params;
@@ -13,15 +16,6 @@ exports.Characters = class Characters extends Service {
     };
     
     return super.create(characterData, params);
-  }
-
-  find(params) {
-    const { query, user } = params;
-    // find characters that belong to the current user
-    return super.find({
-      ...query,
-      user
-    });
   }
 
   get(id, params) {
