@@ -40,11 +40,66 @@ Create user - create a user
 
 Delete user
 
-Update user
+Update user - when we call an update we will send the request like so:
 
+{
+
+    type: 'user|character|party',
+
+    data: {
+
+        whateverdata
+
+    }
+
+}
+
+depending on the type we do the appropiate action. 
+
+The reason for designing it this way is that originally, my thought was that we would simply call the create call on character/party. 
+And then in order to find the users character we would do a find call on character/party with the userId.
+
+However, in my opinion, this will be inefficent and will not scale well. So now the plan is that, we would create the charcter/party and then add that charcter/party id
+to the user like so:
+
+user: {
+
+    email,
+
+    characters: [{
+        name: 'Some name',
+        id    
+    }],
+
+    parties: [{
+        name,
+        id
+    }]
+
+}
+
+That way, when we want to show all of the users characters/parties, we can simply just get the current user. And when we want to view a specific party/character, we would simply
+do a get on character/party with the attached id.
+
+So, the easiest way to do this would be to first create the character/party and then update the user with the resulting id and named
+
+
+**This could be done in an entirely seperate service**
+But.....would that service do the same logic as above?
+or would it handle that better?
+
+Could we do
+
+createCharacter.service
+
+and
+
+createParty.service?
+-------------------
 Get user
 
 **Character Creation**
+This will be the same as creating a party
 
 1. Call an update on the user with the character info and from the user.class call character.create and then link the id to the user
 
