@@ -27,6 +27,10 @@ Get character
   * Equipment/loot
 * the user that owns it
 
+Not sure how to get/update indivdual character info
+Should we just pass in the complete character with whatever was updated?
+Will have to think about this. Not sure the level of granularity that featherjs allows
+
 ## User service
 Create user - create a user
 Delete user
