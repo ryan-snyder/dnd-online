@@ -72,6 +72,12 @@ Features:
 * [superagent for handling api requests?](https://github.com/visionmedia/superagent)
 
 
+## How to use dnd5eapi
+
+Get spells by class by level:
+spells/warlock/level/0 - will get all warlock cantrips
+spells/{class}/level/{level}
+
 
 # TODO
 
