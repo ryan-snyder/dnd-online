@@ -69,6 +69,7 @@ Features:
 * [featherjs for realtime stat tracking?](https://docs.feathersjs.com/)
 * [material-ui](https://www.npmjs.com/package/@material-ui/core)
 * [Icons](https://github.com/game-icons/icons)
+* [superagent for handling api requests?](https://github.com/visionmedia/superagent)
 
 
 
