@@ -75,7 +75,7 @@ Features:
 
 # TODO
 
-* [ ] refamiliarize myself with feathersjs
+* [ ] refamiliarize myself with feathersjs: Look at https://morioh.com/p/501eca468173
 * [ ] start thinking about database design/api design
 * [ ] once we have a solid api design, start coding/testing
 * [ ] once api design is "done", start on frontend work
