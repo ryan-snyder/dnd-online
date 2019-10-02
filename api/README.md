@@ -102,24 +102,24 @@ And then in order to find the users character we would do a find call on charact
 However, in my opinion, this will be inefficent and will not scale well. So now the plan is that, we would create the charcter/party and then add that charcter/party id
 to the user like so:
 
-user: {
+    user: {
 
-    email,
+      email,
 
-    characters: [{
-        name: 'Some name',
-        class,
-        race,
-        level
-        id    
-    }],
+      characters: [{
+          name: 'Some name',
+          class,
+          race,
+          level
+          id    
+      }],
 
-    parties: [{
-        name,
-        id
-    }]
+      parties: [{
+          name,
+          id
+      }]
 
-}
+    }
 
 That way, when we want to show all of the users characters/parties, we can simply just get the current user. And when we want to view a specific party/character, we would simply
 do a get on character/party with the attached id.
