@@ -18,10 +18,23 @@ exports.Characters = class Characters extends Service {
     return super.create(characterData, params);
   }
 
+
+  // What we should do...is when a user tries to get a character...
+  // If they own it they can see it completely
+  // If they are a member of a party containing the character, they can see some
+  // If they are an admin of a party containing the character, they can see it completely
+  // If they have a share link, they can see some/completely, depending on the settings
   get(id, params) {
     const { user } = params;
     // get a character that belongs to the current user
     logger.info('User is', user);
+    /**
+     * I think what we can do is
+     * call the get method...and get the character that is being requested
+     * then, check whether we return all/some/none of the info
+     * That is most likely the most efficient way
+     * We should have a seperate function that returns the correct fields
+     */
     
     return super.get(id, params);
   }

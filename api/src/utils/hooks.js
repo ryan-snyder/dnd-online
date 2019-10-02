@@ -29,6 +29,7 @@ const create = async (context) => {
           return user;
         });
         await context.app.service('users').patch('2jB8PZZQ0c4680pt', updatedUser);
+        
         context.result = {
           message: `Created character called ${result.character.name}`,
           data: result

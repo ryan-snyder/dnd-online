@@ -77,11 +77,38 @@ Admin - the creator of the party: Normally a DM
 
 Member - A member of the party - There may be instances that a party member can see certain info. That may be decided by the DM. Or that member will have a note section for info that they learn
 
-**This probably won't be implemented in this iteration**
+What we should do...is when a user tries to get a character...If they own it they can see it completely
+If they are a member of a party containing the character, they can see some
+If they are an admin of a party containing the character, they can see it completely
+If they have a share link, they can see some/completely, depending on the settings
 
-We could have a party specific endpoint for character info.
+In the character service, when the get method is called we first fetch the character that is being requested, then we deal with whether or not the current user can see it or not. All of our endpoints will be locked down and will only be accessible by a signed-in user. 
 
-Reason for this would be that the party members shouldn't be privy to all info on a character
+
+I feel like, a party specific endpoint would be making uneccesary work. Also, I'm not completely sure how to do something like `party/{id}/characters` or
+`party/{id}/characters/{id}` with featherjs.
+
+That is still a possibility but I'm pretty confident the above does roughly the same thing, but without the extra work required. 
+
+
+## Concerning Business Rule Number 3
+
+> 3. A character that is in a party is independent from other characters (This means that any health, stat, or equipment changes only applies to that 
+> character in that party) (This may be harder than I thought) (Related to a party specific endpoint for characters?) 
+
+Like I note above, this may be more dificult than I thought at first. The reason for this is that, I'm not completely sure about the most efficient way to do this. The easiest way would be to simply clone the character and make updates to that character. But If you have, say, 3 parties using the same character, that's 3 copies. Then you multiple that by however many users are doing this in total and you can see that this number would quickly grow out of hand. Now, maybe I'm over thinking this and maybe this isn't even neccesary. Not sure. I would have to do some research into the best way to do this. 
+
+The party could contain all of the info of all of the characters like so:
+            [{
+                user: 'whatever',
+                character: {
+                    complete info
+                }
+            }]
+But I feel like that is just running into the same problem as making a copy. Since that is essentially a copy. And it would be stored in the database.
+
+
+Maybe we could use channels or events somehow? If each party has a record of events, we could simply grab the character and then apply all of those events. But again, Think of the countless number of events that a DND campaign can have. 
 
 something like
 
@@ -111,7 +138,7 @@ notes would be added to the party members info. like so
 
 1. A character is a created DND character sheet
 2. A character can be in multiple parties
-3. A character that is in a party is independent from other characters (This means that any health, stat, or equipment changes only applies to that character in that party)
+3. A character that is in a party is independent from other characters (This means that any health, stat, or equipment changes only applies to that character in that party) (This may be hardere than I thought) (Related to a party specific endpoint for characters?) 
 4. A user can have multiple characters in multiple parties
 5. A user can create parties
 6. A user can delete characters
