@@ -70,6 +70,9 @@ user: {
 
     characters: [{
         name: 'Some name',
+        class,
+        race,
+        level
         id    
     }],
 
