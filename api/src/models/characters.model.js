@@ -7,6 +7,6 @@ module.exports = function (app) {
     filename: path.join(dbPath, 'characters.db'),
     autoload: true
   });
-
+  
   return Model;
 };

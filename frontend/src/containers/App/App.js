@@ -7,20 +7,30 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    state = {
+    this.state = {
 
     };
   }
   componentDidMount() {
     client.on('connected', data => console.log('event happened', data))
-
-    client.authenticate().catch(() => this.setState({ login: null }));
+    //if the user is already signed in this will succeed
+    client.authenticate().then(user => {
+      this.setState({
+        signedIn: true,
+        user
+      });
+    }).catch({
+      signedIn: null
+    });
 
     client.emit('connected', {
       message: 'User connected'
     });
   }
-
+  // Use react router to point to pages
+  // Sign-in/Sign-up will be a component in the header
+  // We will pass down signedIn and user to the login component
+  // Once I'm not dumb
   render() {
     return (
       <div className="App">
