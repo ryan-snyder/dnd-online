@@ -82,7 +82,9 @@ spells/{class}/level/{level}
 # TODO
 
 * [x] refamiliarize myself with feathersjs: Look at https://morioh.com/p/501eca468173
-* [ ] start thinking about database design/api design
+* [x] start thinking about database design/api design
+* [ ] Try to think of any cases/edge cases as far as api design goes
+* [ ] Api testing using bogus data. Just to confirm that the code works
 * [ ] once we have a solid api design, start coding/testing
 * [ ] once api design is "done", start on frontend work
 * [ ] decide how to handle http://www.dnd5eapi.co/ requests

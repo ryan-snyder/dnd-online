@@ -14,32 +14,33 @@ module.exports = function(app) {
     // real-time connection, e.g. when logging in via REST
     if(connection) {
       // Obtain the logged in user from the connection
-      // const user = connection.user;
+      const user = connection.user;
       
       // The connection is no longer anonymous, remove it
       app.channel('anonymous').leave(connection);
 
       // Add it to the authenticated user channel
       app.channel('authenticated').join(connection);
-
-      // Channels can be named anything and joined on any condition 
       
-      // E.g. to send real-time events only to admins use
-      // if(user.isAdmin) { app.channel('admins').join(connection); }
+      // when a user logs on, add the user to all of his party channels
+      console.log('Adding user to the following rooms');
+      console.log(user.parties);
+      if(Array.isArray(user.parties)) user.parties.forEach(party => app.channel(`party/${party.id}`).join(connection));
 
-      // If the user has joined e.g. chat rooms
-      // if(Array.isArray(user.rooms)) user.rooms.forEach(room => app.channel(`rooms/${room.id}`).join(channel));
-      
-      // Easily organize users by email and userid for things like messaging
-      // app.channel(`emails/${user.email}`).join(channel);
-      // app.channel(`userIds/$(user.id}`).join(channel);
+      // as well, add him to his own channel. This will be used for stat tracking and so on
+      console.log(`Adding user to the users/${user.id} room`);
+      app.channel(`users/${user.id}`).join(connection);
     }
   });
 
   // eslint-disable-next-line no-unused-vars
   app.publish((data, hook) => {
-    // Here you can add event publishers to channels set up in `channels.js`
-    // To publish only for a specific event use `app.publish(eventname, () => {})`
+    /**
+     * We will add more stringent publish rules here
+     * For example only party members or the user who owns the character should be able to see character events
+     * As well, only party members should be able to see party events
+     * And only the user should be able to see user events
+     */
 
     console.log('Publishing all events to all authenticated users. See `channels.js` and https://docs.feathersjs.com/api/channels.html for more information.'); // eslint-disable-line
 

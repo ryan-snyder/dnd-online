@@ -46,22 +46,38 @@ If the user is logged in, allow them to see all of their created characters as w
 ## Party Creation screen
 
    This is the screen that will allow users to create a party. A party must have a name and when created will generate a unique link for users to join.
+**Every user who creates/joins a party must have a character to join with**
+   
+   
+## Unique url and Party Joining
+
+Server side, when a user creates a new party a unique url is generated and saved in the db. On the client, if someone hits that url, we need to check the db for a matching url and allow them to join the party as a member.
+Aha! https://reacttraining.com/react-router/web/api/Route https://stackoverflow.com/questions/46534955/route-handling-a-uniquely-generated-url-specific-to-a-user-in-reactjs-and-react
+
+We can use the above to detect the unique url and render the correct page. 
 
 
 
+**For future reference: There is a lot more I could do on the security side of things. I should make a doc for that**
 
+### Security considerations
+* We should make a custom method that simply checks if the url exists and sends back a 200
+    * reason for this is that we don't want to execute a find and have it return all the matching urls. Or we could for now
+* Have an expirary date for the url. Or allow the user to either regenerate or delete the url
+* We could confirm with the user who created the party if the user is allowed.
+* If the user is not signed in, we should prompt them to create an account and create a character
 # Folder Structure
 
 ## Src
 
 ### containers
-    Any component that either renders/implements components but is not its own page or A component that renders multiple pages (I.E App)
+Any component that either renders/implements components but is not its own page or A component that renders multiple pages (I.E App)
     - containers/
         - App/
             App.js
             etc
 ### pages
-    A complete page.
+A complete page.
     - pages/
         characterCreationPage.js
         authPage.js
@@ -69,24 +85,24 @@ If the user is logged in, allow them to see all of their created characters as w
         partyCreationPage.js
         etc
 ### components
-    A React component that is used in multiple places
+A React component that is used in multiple places
     - components/
         header.js
         sidebar.js
         login.js
         etc
 ### feather
-    Any code related to feathersjs
+Any code related to feathersjs
     - feather/
         feathers.js
 ### actions
-    Redux actions
+Redux actions
 
 ### reducers
-    Redux reducers
+Redux reducers
 
 ### api
-    code to handle api calls
+code to handle api calls
     Unclear if featherjs calls will go here?
     For sure third party calls will
     - api/

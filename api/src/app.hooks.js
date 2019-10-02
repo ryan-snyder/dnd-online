@@ -1,11 +1,11 @@
 // Application hooks that run for every service
-
+const hooks = require('./utils/hooks');
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [hooks.create],
     update: [],
     patch: [],
     remove: []
