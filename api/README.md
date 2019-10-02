@@ -9,6 +9,7 @@
 **Should only create a character in the db on a save**
 
 **We could have temp characters though, for sharing purposes**
+
 Create character - create character for the current user and update the user with the character id and so forth
 
 find character - find character owned by current user with whatever query params
