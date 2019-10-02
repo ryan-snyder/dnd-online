@@ -6,18 +6,19 @@ exports.Party = class Party extends Service {
   // we want to set the members as an array
   // containing the user that created it, with the permission admin
   create(data, params) {
-    const { name, character } = data;
+    const { name, character, url} = data;
     const { user } = params;
 
     const partyData = {
       name,
       members: [{
-        id: user._id,
+        id: user,
         permission: 'admin',
-        character
-      }]
+        character,
+      }],
+      inviteURL: url
     };
-    
+
     return super.create(partyData, params);     
   }
 };

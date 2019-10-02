@@ -6,6 +6,9 @@ exports.Characters = class Characters extends Service {
   create(data, params) {
     const { character} = data;
     const { user } = params;
+    // NOTE: We will have to test this because all we want is the user id
+    // But we will have to implement some basic front end stuff first
+    logger.info('User is ', user);
 
     const characterData = {
       user,

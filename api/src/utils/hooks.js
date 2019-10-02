@@ -29,21 +29,34 @@ const create = async (context) => {
           return user;
         });
         await context.app.service('users').patch('2jB8PZZQ0c4680pt', updatedUser);
-        context.result = result;
+        context.result = {
+          message: `Created character called ${result.character.name}`,
+          data: result
+        };
     } else if (context.path === 'party') {
       //Create a party for the user and generate 
+      const url = `/${shortid.generate()}`;
+      console.log(url.valueOf());
+      context.data.url = url; 
       result = await context.app.service('party').create(context.data, {...context.params, provider: 'internal'});
-
+      console.log(result);
       const updatedUser = await context.app.service('users').get('2jB8PZZQ0c4680pt').then(user => {
         user.parties.push({
           id: result._id,
-          name: result.party.name
+          name: result.name
         });
         return user;
       });
 
       await context.app.service('users').patch('2jB8PZZQ0c4680pt', updatedUser);
-      context.result = result;
+      context.result = {
+        message: `Created party called ${result.name} with the id ${result._id}`,
+        data: {
+          name: result.name,
+          id: result._id,
+          inviteUrl: result.inviteURL
+        }
+      };
     }
   }
   return context;
