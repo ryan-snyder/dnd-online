@@ -34,9 +34,12 @@ Get character
   * Equipment/loot
 * the user that owns it
 
-Not sure how to get/update indivdual character info
-Should we just pass in the complete character with whatever was updated?
-Will have to think about this. Not sure the level of granularity that featherjs allows
+When we update the character, we will send the complete character to the api and then update it. The reason for updating, instead of patching, is that for a character we don't want to carry over anything.
+For example,
+
+If a character loses an item, when we update that character to remove that item, that shouldn't be carried over
+
+I can't think of any cases where we would want to patch instead of update for a character but if there is, we can handle that pretty easily
 
 ## User service
 Create user - create a user
@@ -55,6 +58,9 @@ This will be the same as creating a party
 ^ this way, we can more easily link the character id to the user
 
 ## Party service
+
+**We will have to handle the case of the DM, who will not have one specific character**
+
 Create party - create a party for the current user. Pass in name and generate link using shortid. Link will be added to the database
 
 Delete party
@@ -71,11 +77,36 @@ Admin - the creator of the party: Normally a DM
 
 Member - A member of the party - There may be instances that a party member can see certain info. That may be decided by the DM. Or that member will have a note section for info that they learn
 
+**This probably won't be implemented in this iteration**
+
 We could have a party specific endpoint for character info.
 
 Reason for this would be that the party members shouldn't be privy to all info on a character
 
+something like
 
+/party/character/{id} and then depending on the permission level, return different info
+
+The problem is though, certain party members could know something others don't. But this will be covered by the concept of notes.
+
+**Notes may also not be implemented in this iteration**
+
+Notes would be party specific and user specific
+
+So a member of a party can have notes.
+
+notes would be added to the party members info. like so
+
+        {
+          members: [{
+            id: 'whatever',
+            permission: 'whatever',
+            character: 'whatever',
+            notes: 'some notes'
+          }]
+        }
+ Notes could be time based, as well. Like a journal entry. But again, That will most likely be out of scope in this iteration. Most likely, we wouldn't store it just as plain text though. We would do some string escapes and maybe have an array of notes containing a timestamp and the actual note. We could also enforce a character limit on notes as well
+ 
 # Business Rules/Logic
 
 1. A character is a created DND character sheet
