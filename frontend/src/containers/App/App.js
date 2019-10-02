@@ -3,6 +3,8 @@ import client from '../../feather/feathers'
 import logo from './logo.svg';
 import './App.css';
 
+
+// Use lazy loading here
 class App extends Component {
   constructor(props) {
     super(props);
