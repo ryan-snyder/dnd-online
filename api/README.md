@@ -6,6 +6,8 @@
 
 ## Character service
 
+We should have some sort of validation on a character, maybe?
+For testing right now it's fine.
 **Should only create a character in the db on a save**
 
 **We could have temp characters though, for sharing purposes**
