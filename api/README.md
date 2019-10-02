@@ -8,9 +8,9 @@
 
 We should have some sort of validation on a character, maybe?
 For testing right now it's fine.
-**Should only create a character in the db on a save**
 
-**We could have temp characters though, for sharing purposes**
+Then again, they will only be allowed to create character's that we let them create. Not sure how easy it would be for someone to create a user, hit the api to login and then send a create request that way? As well, not sure what benefit that would give them? But still, it' something to consider at least.
+
 
 Create character - create character for the current user and update the user with the character id and so forth
 
