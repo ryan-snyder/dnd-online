@@ -40,67 +40,7 @@ Create user - create a user
 
 Delete user
 
-**We should probably move this to thoughts?**
-**not that it really matters**
-Update user - when we call an update we will send the request like so:
-
-{
-
-    type: 'user|character|party',
-
-    data: {
-
-        whateverdata
-
-    }
-
-}
-
-depending on the type we do the appropiate action. 
-
-The reason for designing it this way is that originally, my thought was that we would simply call the create call on character/party. 
-And then in order to find the users character we would do a find call on character/party with the userId.
-
-However, in my opinion, this will be inefficent and will not scale well. So now the plan is that, we would create the charcter/party and then add that charcter/party id
-to the user like so:
-
-user: {
-
-    email,
-
-    characters: [{
-        name: 'Some name',
-        class,
-        race,
-        level
-        id    
-    }],
-
-    parties: [{
-        name,
-        id
-    }]
-
-}
-
-That way, when we want to show all of the users characters/parties, we can simply just get the current user. And when we want to view a specific party/character, we would simply
-do a get on character/party with the attached id.
-
-So, the easiest way to do this would be to first create the character/party and then update the user with the resulting id and named
-
-
-**This could be done in an entirely seperate service**
-But.....would that service do the same logic as above?
-or would it handle that better?
-
-Could we do
-
-createCharacter.service
-
-and
-
-createParty.service?
-
+Update user - Update the user
 
 Get user
 
@@ -152,3 +92,39 @@ Does a character have to be in a party in order to track stats?
 How easy should it be to create a character and just track stats? We don't want a user to have to go through a bunch of hoops in order to do so.
 
 More thoughts to come....
+
+## The reason behind the character/party creation logic 
+
+The reason for designing it this way is that originally, my thought was that we would simply call the create call on character/party. 
+And then in order to find the users character we would do a find call on character/party with the userId.
+
+However, in my opinion, this will be inefficent and will not scale well. So now the plan is that, we would create the charcter/party and then add that charcter/party id
+to the user like so:
+
+user: {
+
+    email,
+
+    characters: [{
+        name: 'Some name',
+        class,
+        race,
+        level
+        id    
+    }],
+
+    parties: [{
+        name,
+        id
+    }]
+
+}
+
+That way, when we want to show all of the users characters/parties, we can simply just get the current user. And when we want to view a specific party/character, we would simply
+do a get on character/party with the attached id.
+
+So, the easiest way to do this would be to first create the character/party and then update the user with the resulting id and name and any other relevant info
+
+This would actually be a good fit for a hook. We would have a hook for the character and party create that would create the character/party and pass it down to the user. 
+https://docs.feathersjs.com/api/hooks.html#quick-example
+We could put it in the app hook and check if the service being called is either charcter or party. And if so then create the character/party and pass down the id and relevant info to the user
