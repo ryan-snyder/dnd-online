@@ -45,6 +45,12 @@ app.configure(services);
 app.configure(channels);
 
 // Configure a middleware for 404s and the error handler
+app.use((err, req, res, next) => {
+  logger.info('Hit middleware...');
+  logger.info('Request was', req.body);
+  logger.error(err.stack);
+  next(err);
+});
 app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
