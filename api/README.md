@@ -86,7 +86,12 @@ Reason for this would be that the party members shouldn't be privy to all info o
 8. A user can share characters
 9. A user can copy a character
 
+# Channels
+See https://docs.feathersjs.com/api/channels.html#example
 
+We should make it so that only party members or the current user can see updates to a characters stats, etc
+
+other than that, we won't use this for much.
 ## Thoughts
 
 Does a character have to be in a party in order to track stats?

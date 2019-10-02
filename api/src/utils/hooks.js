@@ -8,7 +8,6 @@ const generateUrl = async (context) => {
   logger.info('Url is', url);
   context.data.url = url;
   // This will get set in the party db
-  // Client side: We will have to determine some approach to verifying and adding a new user to the party
   // I think we move this into the party create call. Instead of in a hook? or we just make this a function instead.
   // And then whoever needs it can use it
   return context;
