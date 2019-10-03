@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormLabel from '@material-ui/core/FormLabel';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import client from '../feather/feathers';
@@ -14,9 +13,9 @@ class Login extends Component {
             email: '',
             password: ''
         }
-        this.handleSignIn = this.handleSignIn.bind(this);
+        this.handleLogIn = this.handleLogIn.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
-        this.handleSignOut = this.handleSignOut.bind(this);
+        this.clearValueAndSignOut = this.clearValueAndSignOut.bind(this);
     }
 
     componentDidMount() {
@@ -48,11 +47,13 @@ class Login extends Component {
             .then(() => {
                 console.log('Success creating user');
                 console.log('Calling sign in');
-                this.handleSignIn()
+                this.handleLogIn()
             });
     }
-    handleSignIn() {
+
+    handleLogIn() {
         const {email, password } = this.state;
+        const { handleSignIn } = this.props;
         console.log('You tried to sign in with the following values');
         console.log(email);
         console.log(password);
@@ -67,43 +68,51 @@ class Login extends Component {
                 signedIn: true,
                 user: auth.user
             });
-            // Do something here to pass this state up
+            handleSignIn();
         }).catch(e => {
             console.log('You were not signed in');
             console.log(e);
         })
 
     }
-
-    handleSignOut() {
-        console.log('Signing out...');
-        client.logout().then(() => {
-            this.setState({
-                ...this.state,
-                signedIn: false,
-                user: {}
-            });
+    clearValueAndSignOut() {
+        this.setState({
+            email: '',
+            password: ''
         });
+        this.props.handleSignOut();
     }
-
     renderLogin() {
         return (
-            <div>
-                <FormControl variant="filled">
-                    <FormLabel>Email</FormLabel>
-                    <FilledInput
+            <span>
+                <Grid
+                container
+                direction="row"
+                spacing={2}
+                justify="center"
+                > 
+                <Grid item>
+                <FormControl margin="dense">
+                    <TextField
+                        className={this.props.classes.input}
                         id="email"
+                        label="email"
                         value={this.state.email}
                         onChange={event => this.setState({
                             ...this.state,
                             email: event.target.value
                         })}
                     />
+
                 </FormControl>
-                <FormControl variant="filled">
-                    <FormLabel>Password</FormLabel>
-                    <FilledInput
+                </Grid>
+                <Grid item>
+                <FormControl margin="dense">
+                    <TextField
+                        className={this.props.classes.input}
                         id="password"
+                        label="password"
+                        type="password"
                         value={this.state.password}
                         onChange= {(event) => {
                             this.setState({
@@ -113,9 +122,13 @@ class Login extends Component {
                         }}
                     />
                 </FormControl>
-                <Button color="primary" onClick={this.handleSignIn}>Login</Button>
-                <Button color="primary" onClick={this.handleSignUp}>Sign Up</Button>
-            </div>
+                </Grid>
+                </Grid>
+                <Grid item>
+                    <Button className={this.props.classes.button} size="small" color="primary" onClick={this.handleLogIn}>Login</Button>
+                    <Button className={this.props.classes.button} size="small" color="primary" onClick={this.handleSignUp}>Sign Up</Button>
+                </Grid>
+            </span>
         )
     }
 
@@ -123,8 +136,8 @@ class Login extends Component {
         const { user } = this.state
         return (
             <div>
-                <Grid item>{`Hello ${user.email}. You are signed in!`}</Grid>
-                <Grid item><Button color="secondary" onClick={this.handleSignOut}> Sign Out</Button></Grid>
+                <Grid item>{user.email}</Grid>
+                <Grid item><Button color="secondary" onClick={this.clearValueAndSignOut}> Sign Out</Button></Grid>
             </div>
         )
     }
@@ -137,23 +150,17 @@ class Login extends Component {
         // We should hook this up to redux and then dispatch the action to change the signin state
         const { signedIn } = this.state;
         return (
-            <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justify="center"
-            >
-            <span>
-                {signedIn ? this.renderLoggedIn() : this.renderLogin()}
-            </span>
-            </Grid>
+            signedIn ? this.renderLoggedIn() : this.renderLogin()
         )
     }
 }
 
 Login.propTypes = {
     signedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
+    handleSignIn: PropTypes.func.isRequired,
+    handleSignOut: PropTypes.func.isRequired
 }
 
 
