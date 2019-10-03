@@ -40,12 +40,14 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            This will redirect the user to the appropriate page
+            This will redirect the user to the appropriate page:
           </p>
           <ul>
+            <li> We need to implement router here</li>
+            <li> As well we should make a sign up page</li>
             <li> Character Creation/Viewer</li>
             <li> Party Creation/Viewer</li>
-            <li> Login/Signup</li>   
+            <li> Signup</li>   
           </ul> 
         </header>
       </div>
