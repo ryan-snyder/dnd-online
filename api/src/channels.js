@@ -6,6 +6,7 @@ module.exports = function(app) {
 
   app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
+    console.log('Got connection');
     app.channel('anonymous').join(connection);
   });
 
@@ -15,7 +16,7 @@ module.exports = function(app) {
     if(connection) {
       // Obtain the logged in user from the connection
       const user = connection.user;
-      
+      console.log(user);
       // The connection is no longer anonymous, remove it
       app.channel('anonymous').leave(connection);
 
@@ -28,8 +29,28 @@ module.exports = function(app) {
       if(Array.isArray(user.parties)) user.parties.forEach(party => app.channel(`party/${party.id}`).join(connection));
 
       // as well, add him to his own channel. This will be used for stat tracking and so on
-      console.log(`Adding user to the users/${user.id} room`);
-      app.channel(`users/${user.id}`).join(connection);
+      console.log(`Adding user to the users/${user._id} room`);
+      app.channel(`users/${user._id}`).join(connection);
+    }
+  });
+
+  app.on('logout', (authResult, { connection }) => {
+    console.log('Logged out');
+    if(connection) {
+      const user = connection.user;
+
+      app.channel('authenticated').leave(connection);
+
+      // when a user logs on, add the user to all of his party channels
+      console.log('Removing  user from the following rooms');
+      console.log(user.parties);
+      if(Array.isArray(user.parties)) user.parties.forEach(party => app.channel(`party/${party.id}`).leave(connection));
+
+      // as well, add him to his own channel. This will be used for stat tracking and so on
+      console.log(`Removing user from the users/${user._id} room`);
+      app.channel(`users/${user._id}`).leave(connection);
+
+      app.channel('anonymous').join(connection);
     }
   });
 
