@@ -73,7 +73,7 @@ We can use the above to detect the unique url and render the correct page.
 ### Security considerations
 * We should make a custom method that simply checks if the url exists and sends back a 200
     * reason for this is that we don't want to execute a find and have it return all the matching urls. Or we could for now
-* Have an expirary date for the url. Or allow the user to either regenerate or delete the url
+* Have an expiry date for the url. Or allow the user to either regenerate or delete the url
 * We could confirm with the user who created the party if the user is allowed.
 * If the user is not signed in, we should prompt them to create an account and create a character
 # Folder Structure
