@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import client from '../../feather/feathers'
 import logo from './logo.svg';
 import Login from '../../components/login';
+import AppBar from '@material-ui/core/AppBar';
+import Paper from '@material-ui/core/Paper';
 import './App.css';
 
 
@@ -18,26 +20,35 @@ class App extends Component {
   componentDidMount() {
     client.on('connected', data => console.log('event happened', data))
     //if the user is already signed in this will succeed
-    client.authenticate().then(user => {
+    // If for some reason the user is deleted...
+    // clear the auth token from the storage
+    client.authenticate().then(auth => {
+      console.log('Sign in successful');
       this.setState({
         signedIn: true,
-        user
+        user: auth.user,
       });
-    }).catch(this.setState({
-      signedIn: false,
-      user: {}
-    }));
+    }).catch(() => {
+      console.log('Sign in failed')
+      this.setState({
+        signedIn: false,
+        user: {}
+      })
+    });
 
     client.emit('connected', {
       message: 'User connected'
     });
   }
   render() {
+    console.log('State was updated?');
     const { signedIn, user } = this.state;
+    console.log(signedIn);
     return (
       <div className="App">
-        <Login signedIn={signedIn} user ={user} />
-        <header className="App-header">
+        <AppBar color="default" position="static">
+          <Login signedIn={signedIn} user ={user} />
+        </AppBar>
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             This will redirect the user to the appropriate page:
@@ -49,7 +60,6 @@ class App extends Component {
             <li> Party Creation/Viewer</li>
             <li> Signup</li>   
           </ul> 
-        </header>
       </div>
     );
   }

@@ -15,17 +15,58 @@ class Login extends Component {
             password: ''
         }
         this.handleSignIn = this.handleSignIn.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleSignOut = this.handleSignOut.bind(this);
+    }
+
+    componentDidMount() {
+        const { signedIn, user } = this.props;
+        console.log(signedIn);
+        console.log(user);
+        this.setState({
+            ...this.state,
+            signedIn,
+            user
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.signedIn !== prevProps.signedIn) {
+            this.setState({
+                ...prevState,
+                signedIn: this.props.signedIn,
+                user: this.props.user,
+            })
+        }
+    }
+
+    handleSignUp() {
+        const { email, password } = this.state;
+        console.log('Signing up');
+        return client.service('users')
+            .create({email, password})
+            .then(() => {
+                console.log('Success creating user');
+                console.log('Calling sign in');
+                this.handleSignIn()
+            });
     }
     handleSignIn() {
+        const {email, password } = this.state;
         console.log('You tried to sign in with the following values');
-        console.log(this.state.email);
-        console.log(this.state.password);
-        client.authenticate({
+        console.log(email);
+        console.log(password);
+        return client.authenticate({
             strategy: 'local',
-            email: this.state.email,
-            password: this.state.password
-        }).then(() => {
-            console.log('User is signed in');
+            email,
+            password
+        }).then(auth => {
+            console.log('setting props');
+            this.setState({
+                ...this.state,
+                signedIn: true,
+                user: auth.user
+            });
             // Do something here to pass this state up
         }).catch(e => {
             console.log('You were not signed in');
@@ -33,14 +74,21 @@ class Login extends Component {
         })
 
     }
-    renderForm() {
+
+    handleSignOut() {
+        console.log('Signing out...');
+        client.logout().then(() => {
+            this.setState({
+                ...this.state,
+                signedIn: false,
+                user: {}
+            });
+        });
+    }
+
+    renderLogin() {
         return (
-            <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justify="center"
-            >
+            <div>
                 <FormControl variant="filled">
                     <FormLabel>Email</FormLabel>
                     <FilledInput
@@ -65,8 +113,19 @@ class Login extends Component {
                         }}
                     />
                 </FormControl>
-                <Button color="primary" onClick={this.handleSignIn}>Submit</Button>
-            </Grid>
+                <Button color="primary" onClick={this.handleSignIn}>Login</Button>
+                <Button color="primary" onClick={this.handleSignUp}>Sign Up</Button>
+            </div>
+        )
+    }
+
+    renderLoggedIn() {
+        const { user } = this.state
+        return (
+            <div>
+                <Grid item>{`Hello ${user.email}. You are signed in!`}</Grid>
+                <Grid item><Button color="secondary" onClick={this.handleSignOut}> Sign Out</Button></Grid>
+            </div>
         )
     }
 
@@ -74,14 +133,20 @@ class Login extends Component {
     // this will take the signedIn and the user props
     // and determine what to do
     render() {
-        const { signedIn, user } = this.props;
         // Make a form that will prompt them to sign up or whatever
         // We should hook this up to redux and then dispatch the action to change the signin state
-
+        const { signedIn } = this.state;
         return (
+            <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justify="center"
+            >
             <span>
-                {signedIn ? (`Hello ${user.email}`) : this.renderForm()}
+                {signedIn ? this.renderLoggedIn() : this.renderLogin()}
             </span>
+            </Grid>
         )
     }
 }
