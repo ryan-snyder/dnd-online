@@ -26,6 +26,16 @@ Communicates with third party apis with either [axios](https://github.com/axios/
 
 Uses featherjs for auth and communicating with our api
 
+## Redux
+
+I plan on using redux because I'm familar with it. But I'm starting to wonder if I really need it.
+The only thing that will rely on it is whether or not the user is logged in. But Redux seems overkill for that.
+
+The plan right now is to check if we're signed in with feathersjs in app.js. And then pass that value down to all of our Routes
+
+This way, It accomplishes roughly the same thing as redux without having uneccesary code
+
+
 # Pages
 
 ## Main Page

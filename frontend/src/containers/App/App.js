@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import client from '../../feather/feathers'
 import logo from './logo.svg';
+import Login from '../../components/login';
 import './App.css';
 
 
@@ -10,7 +11,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-
+      signedIn: false,
+      user: {}
     };
   }
   componentDidMount() {
@@ -21,21 +23,20 @@ class App extends Component {
         signedIn: true,
         user
       });
-    }).catch({
-      signedIn: null
-    });
+    }).catch(this.setState({
+      signedIn: false,
+      user: {}
+    }));
 
     client.emit('connected', {
       message: 'User connected'
     });
   }
-  // Use react router to point to pages
-  // Sign-in/Sign-up will be a component in the header
-  // We will pass down signedIn and user to the login component
-  // Once I'm not dumb
   render() {
+    const { signedIn, user } = this.state;
     return (
       <div className="App">
+        <Login signedIn={signedIn} user ={user} />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
