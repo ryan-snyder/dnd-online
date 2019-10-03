@@ -121,6 +121,13 @@ code to handle api calls
             - update.js
             etc
         etc
+### How to handle api calls
+
+We should come up with a decent way to handle api calls and make functions to provide all the functionality
+
+ideally we would do something like getClasses(), getSpells('query'), etc
+
+But there's going to have to be some thought about the exact way. For example will we do it in seperate files, should we cache, should we queue, what kind of headers, etc
         
 ## Available Scripts
 
