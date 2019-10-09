@@ -11,35 +11,66 @@ function CharacterCreation(props) {
     const [ options, setOptions ] = React.useState({});
 
     React.useEffect(() => {
-        // This will set all of our initial options
-        // So stuff like class, race, level, etc
-        // Basically any option that does not change based on other options
-        /**
-         * Pattern will be
-         *  setOptions({
-         *      classes: getClasses(),
-         *      races: getRaces(),
-         *      levels
-         *  })
-         *  Levels will simply just 1-whatever number
-         */
         setOptions({
             class: getClasses() 
         });
     }, [])
-    
+
+    /**
+     * Any attribute that has a name, means that that attribute has effects on our character.
+     * I.E class, race, and background can all modify our ability scores
+     * level is self explanatory
+     * spells is again self explanatory since you can have more than one spell
+     * 
+     * wondering if we should store this "schema" on the backend?
+     * So that we can ensure that everything matches?
+     */
     const [ character, setCharacter] = React.useState({
+        description: {
+            name: '',
+            playerName: '',
+            age: 0,
+            gender: '',
+            height: '',
+            weight: ''
+        },
         class: {
             name: ''
         },
-        race: '',
-        levels: '',
-        spells: ''
+        race: {
+            name: ''
+        },
+        level: 1,
+        alignment: '',
+        background: {
+            name: ''
+        },
+        spells: {
+            cantrips: [{
+                name: ''
+            }],
+            spells: [{
+                name: ''
+            }]
+        },
+        equipment: [],
+        stats: {
+            abilities: {
+                str: 8,
+                dex: 8,
+                con: 8,
+                int: 8, 
+                wis: 8,
+                cha: 8
+            },
+            feats: [{
+                name: ''
+            }]
+        },
+        proficiencies: [{
+            name: ''
+        }]
     });
-
-    React.useEffect(() => {
-        console.log(character)
-     })
 
     const handleChange = (event) => {
         // we want to pass in the whole object to character

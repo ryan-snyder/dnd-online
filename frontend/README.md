@@ -52,6 +52,7 @@ If the user is logged in, allow them to see all of their created characters as w
 
 ### character object (client side)
 
+**Note we should look into the option of using a backend schema for this**
 The plan for the character object is the following:
 ```js
 {
