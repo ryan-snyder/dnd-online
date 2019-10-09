@@ -1,5 +1,4 @@
-import superagent from 'superagent';
-import superagentCache from 'superagent-cache';
+
 /**
  * Index file for api folder
  * 
@@ -17,13 +16,15 @@ import superagentCache from 'superagent-cache';
  * or we could serve it myself but I'd rather not
  * 
  */
-superagentCache(superagent);
+export const getClasses = () => [
+    {
+        "name": "wizard",
+    },
+    {
+        "name": "bard"
+    }
+];
 
-const baseUrl = 'http://dnd5eapi.co/api/';
+//export const getSpells = (query = {}) => superagent.get(`${baseUrl}spells`).query(query);
 
-
-export const getClasses = () => superagent.get(`${baseUrl}classes`);
-
-export const getSpells = (query = {}) => superagent.get(`${baseUrl}spells`).query(query);
-
-export const getFeatures = (query = {}) => superagent.get(`${baseUrl}features`).query(query);
+//export const getFeatures = (query = {}) => superagent.get(`${baseUrl}features`).query(query);

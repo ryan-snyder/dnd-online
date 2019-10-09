@@ -8,34 +8,65 @@ import { getClasses } from '../api';
 
 function CharacterCreation(props) {
     const { signedIn, user } = props;
-    const [ charClass, setClass] = React.useState({
-        charClass: ''
-    });
-
-    const [ options, setOptions ] = React.useState([]);
-
-    const handleChange = (event) => {
-        setClass(event.target.value);
-    }
+    const [ options, setOptions ] = React.useState({});
 
     React.useEffect(() => {
-        getClasses().then(res => {
-            console.log(res.results);
-            setOptions(res.results)
+        // This will set all of our initial options
+        // So stuff like class, race, level, etc
+        // Basically any option that does not change based on other options
+        /**
+         * Pattern will be
+         *  setOptions({
+         *      classes: getClasses(),
+         *      races: getRaces(),
+         *      levels
+         *  })
+         *  Levels will simply just 1-whatever number
+         */
+        setOptions({
+            class: getClasses() 
         });
-    })
+    }, [])
+    
+    const [ character, setCharacter] = React.useState({
+        class: {
+            name: ''
+        },
+        race: '',
+        levels: '',
+        spells: ''
+    });
 
-    return (
+    React.useEffect(() => {
+        console.log(character)
+     })
+
+    const handleChange = (event) => {
+        // we want to pass in the whole object to character
+        // So we find the object by the event value
+        const value = options[event.target.name].find((value) => value.name === event.target.value);
+        console.log(value);
+        setCharacter(oldCharacter => ({
+            ...oldCharacter,
+            [event.target.name]: value || {
+                name: ''
+            }
+        }));
+    }
+    return(
         <span>
             <p>Character Creation Screen</p>
             {signedIn ? <p>Welcome {user.email}</p> : <p> You are not logged in but you can still make a character</p>}
             <Select
-                value={charClass}
+                value={character.class.name}
                 onChange={handleChange}
+                displayEmpty
+                name="class"
             >
-                {options.forEach(option => 
-                        <MenuItem value={option.name}>{option.name}</MenuItem>
-                )}
+                <MenuItem value=''><em>Select a class</em></MenuItem>
+                {options.class &&
+                    options.class.map(item=> <MenuItem key={item.name} value={item.name}>{item.name}</MenuItem>)
+                }
             </Select>
         </span>
     )

@@ -49,6 +49,49 @@ This way, It accomplishes roughly the same thing as redux without having unecces
    We may add the option to save it temporarily. 
    The character creation screen will show the current stats for the character and will update as needed 
 If the user is logged in, allow them to see all of their created characters as well. In a sidebar probably
+
+### character object (client side)
+
+The plan for the character object is the following:
+```js
+{
+    class: {
+        name: '',
+        other options
+    },
+    race: {
+        name: '',
+        other options
+    }
+}
+```
+
+Every possible character "attribute" will have a "name". The "name" with the identifier for the value
+
+So for class, If your class is wizard, then name will be wizard and so forth
+
+A character attribute is the top level name for the options
+
+So a character can have a class, race, level, traits, features, spells, equipment, stats
+
+### Storing and modify character data
+So..we have a couple of options here
+a) We have a different hook for each "attribute"
+b) we have one hook for the entire character object and we modify it that
+
+The second one is a much better option in regards to that we only have to worry about one hook instead of 20 different hooks
+
+
+The hardest part of all this is going to be handling modifications
+Because in DnD something as simple as race can alter 2-3 other attributes
+So it's going to be fairly complicated to render and show all of the changes
+
+I'm thinking of using https://material-ui.com/components/steppers/ for the UI maybe?
+
+Either that or simple tabs
+
+And the character data will be a seperate view on the side that will show all of the current attributes
+
 ## Party screen
 
    This screen will allow users to view existing parties and create a new party. If the user is not logged in, we will prompt them to create an account or login. This screen will by default show all of the users parties if their are any and will have a button to create a new party. This will have a list of all parties and the appropriate buttons to edit, delete the party
