@@ -18,13 +18,10 @@ const create = async (context) => {
   if(context.params.provider !== 'internal') {
     if(context.path === 'characters' ) {
         result = await context.app.service('characters').create(context.data, {...context.params, provider: 'internal'});
-        // once we get the api sorted out
-        // we will have to change this to update the current connected user
+
         const updatedUser = await context.app.service('users').get('2jB8PZZQ0c4680pt').then(user => {
           user.characters.push({
             id: result._id,
-            name: result.character.name,
-            class: result.character.class
           });
           return user;
         });
@@ -35,7 +32,7 @@ const create = async (context) => {
           data: result
         };
     } else if (context.path === 'party') {
-      //Create a party for the user and generate 
+      
       const url = `/${shortid.generate()}`;
       console.log(url.valueOf());
       context.data.url = url; 
@@ -44,7 +41,6 @@ const create = async (context) => {
       const updatedUser = await context.app.service('users').get('2jB8PZZQ0c4680pt').then(user => {
         user.parties.push({
           id: result._id,
-          name: result.name
         });
         return user;
       });

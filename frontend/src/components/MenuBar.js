@@ -22,12 +22,19 @@ const useStyles = makeStyles({
         flex: "auto"
     }
 });
-
+/**
+ * TODO:
+ * 
+ * Change this to Tabs
+ * Make React router tab component
+ * Make dropdown menu for login and such
+ */
 function MenuBar(props) {
     const classes = useStyles();
     const { signedIn, user, handleSignIn, handleSignOut } = props;
     return (
         <AppBar color="default" position="static">
+            
             <Grid
                 container
                 spacing={1}

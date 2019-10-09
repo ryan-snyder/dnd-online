@@ -24,6 +24,9 @@ function CharacterCreation(props) {
      * 
      * wondering if we should store this "schema" on the backend?
      * So that we can ensure that everything matches?
+     * Probably not, but we should move this into a util function?
+     *  Not sure if we want to use this elsewhere or what
+     * 
      */
     const [ character, setCharacter] = React.useState({
         description: {
@@ -72,11 +75,9 @@ function CharacterCreation(props) {
         }]
     });
 
+    // handle change for dropdown lists
     const handleChange = (event) => {
-        // we want to pass in the whole object to character
-        // So we find the object by the event value
         const value = options[event.target.name].find((value) => value.name === event.target.value);
-        console.log(value);
         setCharacter(oldCharacter => ({
             ...oldCharacter,
             [event.target.name]: value || {

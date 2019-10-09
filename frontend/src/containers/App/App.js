@@ -1,4 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/feathers'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
@@ -68,7 +69,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-        <Suspense fallback={<div> Loading... </div>}>
+        <Suspense fallback={<CircularProgress/>}>
             <Menu handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} />
             <p>
               This will redirect the user to the appropriate page:
