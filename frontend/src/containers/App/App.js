@@ -71,9 +71,6 @@ class App extends Component {
       <div className="App">
         <Suspense fallback={<CircularProgress/>}>
             <Menu handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} />
-            <p>
-              This will redirect the user to the appropriate page:
-            </p>
             <ul>
               <Switch>
                 <Route path="/party">
