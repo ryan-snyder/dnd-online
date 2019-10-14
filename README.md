@@ -1,4 +1,13 @@
 # cypress-dnd-project
+
+We have  about 2 hours left
+
+We should add some more character creation stuff, be able to save that character, be able to create a party, and join that party.
+
+And then perhaps some stats tracking...
+
+
+
 Web-based DND character creator and adventure tracker
 
 # Basic Info
