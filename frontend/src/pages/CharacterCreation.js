@@ -107,26 +107,23 @@ function CharacterCreation(props) {
         // or shift the values around
         for ( let key in character.stats.abilities ) {
             const { rolls } = parseAndRoll('4d6');
-            console.log(rolls);
             rolls.sort().splice(0, 1);
-            console.log(rolls);
             const stat = rolls.reduce((a, c) => a + c);
             character.stats.abilities[key] = stat;
         }
-
         setCharacter({...character, stats: character.stats});
     }
-
-    /**
-     * Do we want to make this a seperate component? I don't believe that makes sense
-     * Because components are only for things that you reuse
-     */
     /**
      * All we want to do is make some basic stuff
      * Main things to implement would be stats,
      * classes
      * some basic spells, etc
      * 
+     * 
+     * 
+     * We should prompt them to save if they try to navigate away...
+     * As well if they're logged in, show them a list of characters to edit or let them make a new one
+     * BUT the above is first
      */
     return(
         <span>
