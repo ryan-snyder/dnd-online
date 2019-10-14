@@ -1,34 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
 
-
+const useStyles = makeStyles(() => ({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: 'grey',
+    },
+    inline: {
+      display: 'inline',
+    },
+  }));
 
 function CharacterCreation(props) {
-    const { signedIn, user } = props;
-    const [ options, setOptions ] = React.useState({});
+    const classes = useStyles();
 
-    React.useEffect(() => {
+    const { signedIn, user } = props;
+    const [ options, setOptions ] = useState({});
+
+    useEffect(() => {
         setOptions({
             class: getClasses() 
         });
     }, [])
-
     /**
      * Any attribute that has a name, means that that attribute has effects on our character.
      * I.E class, race, and background can all modify our ability scores
      * level is self explanatory
      * spells is again self explanatory since you can have more than one spell
      * 
-     * wondering if we should store this "schema" on the backend?
-     * So that we can ensure that everything matches?
-     * Probably not, but we should move this into a util function?
-     *  Not sure if we want to use this elsewhere or what
-     * 
      */
-    const [ character, setCharacter] = React.useState({
+    // Should we remember stats on a page reload?
+    // Or would they have to save it?
+    const [ character, setCharacter] = useState({
         description: {
             name: '',
             playerName: '',
@@ -85,6 +98,36 @@ function CharacterCreation(props) {
             }
         }));
     }
+    // Based off of dnd player handbook
+    // which stats to roll 4 d6 and take the three highest values
+    const generateValue = () => {
+        // What this will do is generate our array of "stats"
+        // and then apply them to our object
+        // We will then allow the user to either roll again, 
+        // or shift the values around
+        for ( let key in character.stats.abilities ) {
+            const { rolls } = parseAndRoll('4d6');
+            console.log(rolls);
+            rolls.sort().splice(0, 1);
+            console.log(rolls);
+            const stat = rolls.reduce((a, c) => a + c);
+            character.stats.abilities[key] = stat;
+        }
+
+        setCharacter({...character, stats: character.stats});
+    }
+
+    /**
+     * Do we want to make this a seperate component? I don't believe that makes sense
+     * Because components are only for things that you reuse
+     */
+    /**
+     * All we want to do is make some basic stuff
+     * Main things to implement would be stats,
+     * classes
+     * some basic spells, etc
+     * 
+     */
     return(
         <span>
             <p>Character Creation Screen</p>
@@ -100,6 +143,19 @@ function CharacterCreation(props) {
                     options.class.map(item=> <MenuItem key={item.name} value={item.name}>{item.name}</MenuItem>)
                 }
             </Select>
+            <Button onClick={generateValue}>Roll stats</Button>
+            <List className={classes.root}>
+              {Object.keys(character.stats.abilities).map(function(keyName, keyIndex) {
+                return (
+                <ListItem>
+                    <ListItemText
+                        primary={keyName}
+                        secondary={character.stats.abilities[keyName]}
+                    />
+                </ListItem>
+                )
+              })}
+            </List>
         </span>
     )
 }

@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Login from './login';
 import NavTab from './NavTab';
 
@@ -22,18 +22,53 @@ const useStyles = makeStyles({
     },
     links: {
         backgroundColor: "gray",
-        flex: "auto"
+        flex: "auto",
     }
 });
 /**
- * TODO:
+ * If I hade more time,
+ * I would make this a lot nicer but for now, it's good enough
  * 
- * Change this to Tabs
- * Make React router tab component
- * Make dropdown menu for login and such
+ * As well not sure why the first time you navigate to a new tab..
+ * it does as page refresh?
  * 
- * 
- *             <Grid
+ * May be because of the fact we are lazy loading our components
+ * Unsure
+ * Regardless, I don't care right now
+ */
+function MenuBar(props) {
+    const classes = useStyles();
+    const { signedIn, user, handleSignIn, handleSignOut } = props;
+    const [value, setValue ] = React.useState(0);
+
+    const handleChange = (event, index) => {
+        props.history.push(`${event.currentTarget.getAttribute("to")}`);
+        setValue(index);
+    }
+
+    return (
+        <AppBar color="default" position="static">
+            <Grid
+                container    
+            >
+            <Grid item>
+            <Tabs
+                value={value}
+                onChange={handleChange}
+            >
+                <Tab
+                    value={0}
+                    label={"Character Creation"}
+                    to={"/character"}
+                />
+                <Tab
+                    value={1}
+                    label={"Manager Party"}
+                    to={"/party"}
+                />
+            </Tabs>
+            </Grid>
+            <Grid
                 container
                 item
                 direction="row"
@@ -44,37 +79,7 @@ const useStyles = makeStyles({
                 <Login classes={classes} handleSignIn={handleSignIn} handleSignOut={handleSignOut} signedIn={signedIn} user ={user} />
                 </Grid>
             </Grid>
- */
-function MenuBar(props) {
-    const classes = useStyles();
-    const { signedIn, user, handleSignIn, handleSignOut } = props;
-    const [value, setValue ] = React.useState(0);
-
-
-    const handleChange = (event, index) => {
-        console.log("Handling change");
-        setValue(index);
-    }
-
-    return (
-        <AppBar color="default" position="static">
-            <Tabs
-                value={value}
-                onChange={handleChange}
-            >
-                <Tab
-                    value={0}
-                    label={"Character Creation"}
-                    to={"/character"}
-                    component={NavTab}
-                />
-                <Tab
-                    value={1}
-                    label={"Manager Party"}
-                    to={"/party"}
-                    component={NavTab}
-                />
-            </Tabs>
+            </Grid>
         </AppBar>
     )
 }
@@ -88,4 +93,4 @@ MenuBar.propTypes = {
 }
 
 
-export default MenuBar;
+export default withRouter(MenuBar);
