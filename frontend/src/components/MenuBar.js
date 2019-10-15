@@ -7,7 +7,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { withRouter } from 'react-router-dom';
 import Login from './login';
-import NavTab from './NavTab';
 
 const useStyles = makeStyles({
     button: {
@@ -66,6 +65,13 @@ function MenuBar(props) {
                     label={"Manager Party"}
                     to={"/party"}
                 />
+                { signedIn && (
+                    <Tab
+                        value={2}
+                        label={"View Characters"}
+                        to={"/user/characters/view"}
+                    />
+                )}
             </Tabs>
             </Grid>
             <Grid

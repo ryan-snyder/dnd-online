@@ -9,6 +9,7 @@ import './App.css';
 const Menu = lazy(() => import('../../components/MenuBar'));
 const CharacterCreation = lazy(() => import('../../pages/CharacterCreation'));
 const Party = lazy(() => import('../../pages/Party'));
+const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
 
 class App extends Component {
   constructor(props) {
@@ -79,7 +80,11 @@ class App extends Component {
                 <Route path="/character">
                   <CharacterCreation signedIn={signedIn} user={user} />
                 </Route>
+                <Route path="/user/characters/view">
+                  <ViewCharacters signedIn={signedIn} user={user} />
+                </Route>
                 <Route path="/">
+                  If you were trying to view a page that is not this page, it probably doesn't exist
                   <CharacterCreation signedIn={signedIn} user={user}/>
                 </Route>
               </Switch>

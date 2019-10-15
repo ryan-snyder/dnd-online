@@ -19,16 +19,17 @@ const create = async (context) => {
     if(context.path === 'characters' ) {
         result = await context.app.service('characters').create(context.data, {...context.params, provider: 'internal'});
 
-        const updatedUser = await context.app.service('users').get('2jB8PZZQ0c4680pt').then(user => {
+        const updatedUser = await context.app.service('users').get(context.params.connection.user._id).then(user => {
           user.characters.push({
             id: result._id,
+            name: result.character.description.name
           });
           return user;
         });
-        await context.app.service('users').patch('2jB8PZZQ0c4680pt', updatedUser);
-        
+        await context.app.service('users').patch(context.params.connection.user._id, updatedUser);
+        console.log(result);
         context.result = {
-          message: `Created character called ${result.character.name}`,
+          message: `Created character called ${result.character.description.name}`,
           data: result
         };
     } else if (context.path === 'party') {
@@ -38,14 +39,16 @@ const create = async (context) => {
       context.data.url = url; 
       result = await context.app.service('party').create(context.data, {...context.params, provider: 'internal'});
       console.log(result);
-      const updatedUser = await context.app.service('users').get('2jB8PZZQ0c4680pt').then(user => {
+      const updatedUser = await context.app.service('users').get(context.params.connection.user._id).then(user => {
         user.parties.push({
           id: result._id,
+          name: result.name,
+          inviteURL: result.inviteURL
         });
         return user;
       });
 
-      await context.app.service('users').patch('2jB8PZZQ0c4680pt', updatedUser);
+      await context.app.service('users').patch(context.params.connection.user._id, updatedUser);
       context.result = {
         message: `Created party called ${result.name} with the id ${result._id}`,
         data: {
