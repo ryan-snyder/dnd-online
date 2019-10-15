@@ -1,21 +1,15 @@
 import React, { Component, Suspense, lazy } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/feathers'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
 import './App.css';
 
 
 // Use lazy loading here
-const Login = lazy(() => import('../../components/login'));
-// TODO: Move this into pages
-// And then lazy load them as well
-function Character() {
-  return <li> Character Creation/Viewer</li>
-}
-
-function Party() {
-  return <li> Party Creation/Viewer</li>
-}
+const Menu = lazy(() => import('../../components/MenuBar'));
+const CharacterCreation = lazy(() => import('../../pages/CharacterCreation'));
+const Party = lazy(() => import('../../pages/Party'));
+const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +19,9 @@ class App extends Component {
       signedIn: false,
       user: {}
     };
+
+    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
   componentDidMount() {
     client.on('connected', data => console.log('event happened', data))
@@ -50,35 +47,45 @@ class App extends Component {
     });
   }
 
+  handleSignIn = () => {
+    client.authenticate().then(auth => {
+      this.setState({
+        signedIn: true,
+        user: auth.user,
+      })
+    });
+  }
+
+  handleSignOut = () => {
+    client.logout().then(() => {
+      this.setState({
+        signedIn: false,
+        user: {}
+      })
+    });
+  }
+
   render() {
     const { signedIn, user } = this.state;
-    /**
-     * TODO:
-     * Add a Router Below the app bar
-     * Add Character creation
-     * Move AppBar and Login into a NavBar component
-     * 
-     */
     return (
       <Router>
       <div className="App">
-        <Suspense fallback={<div> Loading... </div>}>
-          <AppBar color="default" position="static">
-            <Login signedIn={signedIn} user ={user} />
-          </AppBar>
-            <p>
-              This will redirect the user to the appropriate page:
-            </p>
+        <Suspense fallback={<CircularProgress/>}>
+            <Menu handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} />
             <ul>
               <Switch>
                 <Route path="/party">
-                  <Party />
+                  <Party signedIn={signedIn} user={user}/>
                 </Route>
                 <Route path="/character">
-                  <Character />
+                  <CharacterCreation signedIn={signedIn} user={user} />
+                </Route>
+                <Route path="/user/characters/view">
+                  <ViewCharacters signedIn={signedIn} user={user} />
                 </Route>
                 <Route path="/">
-                  <Character />
+                  If you were trying to view a page that is not this page, it probably doesn't exist
+                  <CharacterCreation signedIn={signedIn} user={user}/>
                 </Route>
               </Switch>
             </ul> 

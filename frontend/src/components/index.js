@@ -1,3 +1,0 @@
-/**
- * Index file for components
- */

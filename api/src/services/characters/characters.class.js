@@ -4,17 +4,15 @@ exports.Characters = class Characters extends Service {
   // When a new character is **SAVED**
   // add that character to the database with the associated data/userId
   create(data, params) {
-    const { character} = data;
-    const { user } = params;
+    const id = params.user._id;
     // NOTE: We will have to test this because all we want is the user id
     // But we will have to implement some basic front end stuff first
-    logger.info('User is ', user);
+    logger.info('User is ', id);
 
     const characterData = {
-      user,
-      character
+      owner: id,
+      character: data
     };
-
     return super.create(characterData, params);
   }
 
