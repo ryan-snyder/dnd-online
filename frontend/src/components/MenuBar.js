@@ -62,7 +62,7 @@ function MenuBar(props) {
                 />
                 <Tab
                     value={1}
-                    label={"Manager Party"}
+                    label={"Manage Party"}
                     to={"/party"}
                 />
                 { signedIn && (

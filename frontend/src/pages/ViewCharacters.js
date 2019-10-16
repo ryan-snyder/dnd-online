@@ -1,5 +1,6 @@
 import React, {useState, useEffect }  from 'react';
 import client from '../feather/feathers';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -13,8 +14,14 @@ function ViewCharacters(props) {
     const [characters, setCharacters] = useState([]);
 
     useEffect(() => {
-        console.log(user.characters);
-        setCharacters(user.characters || []);
+        console.log(user);
+        client.service('users').get(user._id).then(result => {
+            console.log(result.characters);
+            setCharacters(result.characters);
+        }).catch((err) => {
+            console.log(err);
+            setCharacters([]);
+        })
     }, [user])
     /**
      * For this...do we want to change it back to the way we had it
@@ -30,7 +37,7 @@ function ViewCharacters(props) {
             <List>
             {characters.map((character, index) => {
                     return (
-                        <ListItem button divider key={index} >
+                        <ListItem button component={Link} divider key={index} to={`/character/${character.id}`}>
                             <ListItemText
                                 primary={character.name}
                                 secondary={`Class: ${character.class} Race: ${character.race} Level: ${character.level}`}

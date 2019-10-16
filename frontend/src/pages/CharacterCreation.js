@@ -35,9 +35,8 @@ const useStyles = makeStyles(() => ({
 function CharacterCreation(props) {
     const classes = useStyles();
 
-    const { signedIn, user } = props;
+    const { signedIn, user, id} = props;
     const [ options, setOptions ] = useState({});
-
 
     useEffect(() => {
         setOptions({
@@ -53,7 +52,7 @@ function CharacterCreation(props) {
      */
     // Should we remember stats on a page reload?
     // Or would they have to save it?
-    const [ character, setCharacter] = useState(props.character || {
+    const [ character, setCharacter] = useState({
         description: {
             name: '',
             playerName: '',
@@ -100,6 +99,13 @@ function CharacterCreation(props) {
         }]
     });
 
+    useEffect(() => {
+        console.log(props)
+        if(props.character) {
+            setCharacter(props.character);
+        }
+    }, [props.character]);
+
     const returnStats = (values) => Object.entries(character.stats.abilities).map((entry, index) => {
         entry[1] = values[index];
         return entry;
@@ -128,7 +134,6 @@ function CharacterCreation(props) {
                 name: ''
             }
         }));
-        console.log(character);
     }
 
     const handleChangeDescription = (event) => {
@@ -199,8 +204,8 @@ function CharacterCreation(props) {
     return(
         <span>
             <p>Character Creation Screen</p>
-            {signedIn ? <p>Welcome {user.email}</p> : <p> You are not logged in but you can still make a character</p>}
-            <Button onClick={handleSave}>Save</Button>
+            {props.message || (signedIn ? <p>Welcome {user.email}</p> : <p> You are not logged in but you can still make a character</p>)}
+            <Button onClick={() => props.handleSave(id, character) || handleSave}>Save</Button>
             <Select
                 value={character.class.name}
                 onChange={handleChangeDropDown}
@@ -279,10 +284,14 @@ function CharacterCreation(props) {
 }
 
 
+
 CharacterCreation.propTypes = {
     signedIn: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
     character: PropTypes.object,
+    handleSave: PropTypes.func,
+    message: PropTypes.element,
+    id: PropTypes.string,
 }
 
 

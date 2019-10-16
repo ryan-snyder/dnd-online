@@ -12,7 +12,20 @@ const generateUrl = async (context) => {
   // And then whoever needs it can use it
   return context;
 };
-
+/**
+ * 
+ * For patching a character/party
+ * 
+ * We should probably make a hook like this that updates the related fields in the user object as well
+ * 
+ * That is out of scope for now though
+ * Either that or we remove the extra fields from the user object and fetch the character object client side before we edit it
+ * Not sure which is more work. 
+ * 
+ * One is more work on the patch call....which is server side and therefore less visible to the user
+ * Wheras the other one is more work on fetching all the characters...which will be much more visible to the user especially as we're fetching multiple characters...
+ * instead of just patching the user object
+ */
 const create = async (context) => {
   let result = undefined;
   if(context.params.provider !== 'internal') {

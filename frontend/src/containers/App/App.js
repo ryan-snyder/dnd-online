@@ -10,6 +10,8 @@ const Menu = lazy(() => import('../../components/MenuBar'));
 const CharacterCreation = lazy(() => import('../../pages/CharacterCreation'));
 const Party = lazy(() => import('../../pages/Party'));
 const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
+const CharacterEdit = lazy(() => import('../../pages/CharacterEdit'));
+const JoinParty = lazy(() => import('../../pages/JoinParty'));
 
 class App extends Component {
   constructor(props) {
@@ -74,17 +76,26 @@ class App extends Component {
             <Menu handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} />
             <ul>
               <Switch>
+                <Route exact path="/join/:invite">
+                  {({ match }) => <JoinParty match={match} signedIn={signedIn} user={user}/> }
+                </Route>
                 <Route path="/party">
                   <Party signedIn={signedIn} user={user}/>
                 </Route>
-                <Route path="/character">
+                <Route exact path="/character">
                   <CharacterCreation signedIn={signedIn} user={user} />
+                </Route>
+                <Route path="/character/:id">
+                  {({ match }) => <CharacterEdit match={match} signedIn={signedIn} user={user} /> }
                 </Route>
                 <Route path="/user/characters/view">
                   <ViewCharacters signedIn={signedIn} user={user} />
                 </Route>
                 <Route path="/">
-                  If you were trying to view a page that is not this page, it probably doesn't exist
+                  404
+                  The page you are looking for probably doesn't exist
+                </Route>
+                <Route exact path="/">
                   <CharacterCreation signedIn={signedIn} user={user}/>
                 </Route>
               </Switch>
