@@ -25,7 +25,7 @@ function CharacterEdit(props) {
     }
     return (
         <span>
-            <CharacterCreation handleSave={handleSave} id={id} character={character} signedIn={signedIn} user={user} message={<p>You are currently editing character {id} </p>}/>
+            <CharacterCreation handleUpdate={handleSave} id={id} character={character} signedIn={signedIn} user={user} message={<p>You are currently editing character {id} </p>}/>
         </span>
     )
 };

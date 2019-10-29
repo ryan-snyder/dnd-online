@@ -91,12 +91,12 @@ class App extends Component {
                 <Route path="/user/characters/view">
                   <ViewCharacters signedIn={signedIn} user={user} />
                 </Route>
-                <Route path="/">
-                  404
-                  The page you are looking for probably doesn't exist
-                </Route>
                 <Route exact path="/">
                   <CharacterCreation signedIn={signedIn} user={user}/>
+                </Route>
+                <Route>
+                  404
+                  The page you are looking for probably doesn't exist
                 </Route>
               </Switch>
             </ul> 
