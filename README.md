@@ -1,16 +1,19 @@
-# cypress-dnd-project
-
-We have  about 2 hours left
-
-We should add some more character creation stuff, be able to save that character, be able to create a party, and join that party.
-
-And then perhaps some stats tracking...
-
-
-
+# dnd-online
 Web-based DND character creator and adventure tracker
 
-# Basic Info
+Features (current and planned):
+* Character creation
+* Party creation
+* Online based dnd
+* Invite your friends and play dnd from anywhere with an internet connection
+* Random and planned encounters
+* Immersive story telling
+* Completely free
+
+
+
+
+# Boring Tech Stuff
 
 ## Frontend:
 
@@ -89,14 +92,15 @@ spells/{class}/level/{level}
 
 
 # TODO
-
-* [x] refamiliarize myself with feathersjs: Look at https://morioh.com/p/501eca468173
-* [x] start thinking about database design/api design
-* [ ] Try to think of any cases/edge cases as far as api design goes
-* [ ] Api testing using bogus data. Just to confirm that the code works
-* [ ] once we have a solid api design, start coding/testing
-* [ ] once api design is "done", start on frontend work
-* [ ] decide how to handle http://www.dnd5eapi.co/ requests
-* [ ] implement basic login/signup
+See project board for better understanding
+* [ ] Sign In Page
+* [ ] Add cypress tests
 * [ ] write code to handle http://www.dnd5eapi.co/ requests and parse correct data
-* [ ] start on character creation page
+* [ ] View/edit multiple characters
+* [ ] View parties
+* [ ] more robust character creation
+* [ ] upload characteres from other sources
+* [ ] upload custom rules
+* [ ] Create invite link and able to join party from that link
+* [ ] **STABILITY**
+* [ ] connect to discord?
