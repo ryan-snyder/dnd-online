@@ -12,6 +12,7 @@ const Party = lazy(() => import('../../pages/Party'));
 const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
 const CharacterEdit = lazy(() => import('../../pages/CharacterEdit'));
 const JoinParty = lazy(() => import('../../pages/JoinParty'));
+const SignIn = lazy(() => import('../../pages/SignIn'));
 
 class App extends Component {
   constructor(props) {
@@ -19,9 +20,11 @@ class App extends Component {
 
     this.state = {
       signedIn: false,
-      user: {}
+      user: {},
+      onSignInPage: false
     };
 
+    this.handleLogIn = this.handleLogIn.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
   }
@@ -48,8 +51,29 @@ class App extends Component {
       message: 'User connected'
     });
   }
-
+  handleLogIn = (data) => {
+    console.log('Logging In');
+    console.log(data);
+    const { email, password } = data; 
+    client.authenticate({
+      strategy: 'local',
+      email,
+      password
+    }).then(auth => {
+        console.log('setting props');
+        this.setState({
+            ...this.state,
+            signedIn: true,
+            user: auth.user
+        });
+        this.handleSignIn();
+    }).catch(e => {
+        console.log('You were not signed in');
+        console.log(e);
+    })
+  }
   handleSignIn = () => {
+    console.log("siging in");
     client.authenticate().then(auth => {
       this.setState({
         signedIn: true,
@@ -68,12 +92,12 @@ class App extends Component {
   }
 
   render() {
-    const { signedIn, user } = this.state;
+    const { signedIn, user, onSignInPage} = this.state;
     return (
       <Router>
       <div className="App">
         <Suspense fallback={<CircularProgress/>}>
-            <Menu handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} />
+            <Menu handleLogIn={this.handleLogIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} onSignInPage = {onSignInPage} />
             <ul>
               <Switch>
                 <Route exact path="/join/:invite">
@@ -90,6 +114,9 @@ class App extends Component {
                 </Route>
                 <Route path="/user/characters/view">
                   <ViewCharacters signedIn={signedIn} user={user} />
+                </Route>
+                <Route path="/signin">
+                  <SignIn signedIn={signedIn} user={user} onSignInPage={onSignInPage}/>
                 </Route>
                 <Route exact path="/">
                   <CharacterCreation signedIn={signedIn} user={user}/>

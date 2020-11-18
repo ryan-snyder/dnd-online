@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import client from '../feather/feathers';
+
+import { Link as RouterLink } from 'react-router-dom';
+
+
+// seperate into multiple components????
+// one for actual sign up page, and one for menubar
 class Login extends Component {
 
     constructor(props) {
@@ -14,7 +20,6 @@ class Login extends Component {
             password: ''
         }
         this.handleLogIn = this.handleLogIn.bind(this);
-        this.handleSignUp = this.handleSignUp.bind(this);
         this.clearValueAndSignOut = this.clearValueAndSignOut.bind(this);
     }
 
@@ -38,19 +43,13 @@ class Login extends Component {
             })
         }
     }
-
-    handleSignUp() {
-        const { email, password } = this.state;
-        console.log('Signing up');
-        return client.service('users')
-            .create({email, password})
-            .then(() => {
-                console.log('Success creating user');
-                console.log('Calling sign in');
-                this.handleLogIn()
-            });
+    handleLogIn() {
+        this.props.handleLogIn({
+            email: this.state.email,
+            password: this.state.password
+        }); 
     }
-
+    /*
     handleLogIn() {
         const {email, password } = this.state;
         const { handleSignIn } = this.props;
@@ -75,6 +74,7 @@ class Login extends Component {
         })
 
     }
+    */
     clearValueAndSignOut() {
         this.setState({
             email: '',
@@ -126,7 +126,7 @@ class Login extends Component {
                 </Grid>
                 <Grid item>
                     <Button className={this.props.classes.button} size="small" color="primary" onClick={this.handleLogIn}>Login</Button>
-                    <Button className={this.props.classes.button} size="small" color="primary" onClick={this.handleSignUp}>Sign Up</Button>
+                    <Button className={this.props.classes.button} size="small" color="primary" component={RouterLink} to="/signin">Sign Up Here</Button>
                 </Grid>
             </span>
         )
@@ -159,7 +159,7 @@ Login.propTypes = {
     signedIn: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    handleSignIn: PropTypes.func.isRequired,
+    handleLogIn: PropTypes.func.isRequired,
     handleSignOut: PropTypes.func.isRequired
 }
 

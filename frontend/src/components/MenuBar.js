@@ -37,7 +37,7 @@ const useStyles = makeStyles({
  */
 function MenuBar(props) {
     const classes = useStyles();
-    const { signedIn, user, handleSignIn, handleSignOut } = props;
+    const { signedIn, user, handleLogIn, handleSignOut, onSignInPage} = props;
     const [value, setValue ] = React.useState(0);
 
     const handleChange = (event, index) => {
@@ -74,17 +74,19 @@ function MenuBar(props) {
                 )}
             </Tabs>
             </Grid>
-            <Grid
-                container
-                item
-                direction="row"
-                xs={3}
-                justify="flex-end"
-            >
-                <Grid item>
-                <Login classes={classes} handleSignIn={handleSignIn} handleSignOut={handleSignOut} signedIn={signedIn} user ={user} />
+            { !onSignInPage && 
+                <Grid
+                    container
+                    item
+                    direction="row"
+                    xs={3}
+                    justify="flex-end"
+                >
+                    <Grid item>
+                    <Login classes={classes} handleLogIn={handleLogIn} handleSignOut={handleSignOut} signedIn={signedIn} user ={user} />
+                    </Grid>
                 </Grid>
-            </Grid>
+            }
             </Grid>
         </AppBar>
     )
@@ -94,8 +96,9 @@ function MenuBar(props) {
 MenuBar.propTypes = {
     signedIn: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
-    handleSignIn: PropTypes.func.isRequired,
-    handleSignOut: PropTypes.func.isRequired
+    handleLogIn: PropTypes.func.isRequired,
+    handleSignOut: PropTypes.func.isRequired,
+    onSignInPage: PropTypes.bool
 }
 
 
