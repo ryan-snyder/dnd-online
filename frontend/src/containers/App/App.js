@@ -1,7 +1,8 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useContext} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/feathers'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Store, { Context } from '../../Store/Store';
 import './App.css';
 
 
@@ -12,87 +13,98 @@ const Party = lazy(() => import('../../pages/Party'));
 const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
 const CharacterEdit = lazy(() => import('../../pages/CharacterEdit'));
 const JoinParty = lazy(() => import('../../pages/JoinParty'));
+const SignIn = lazy(() => import('../../pages/SignIn'));
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = () => {
+  const [state, dispatch] = useContext(Context);
 
-    this.state = {
-      signedIn: false,
-      user: {}
-    };
-
-    this.handleSignIn = this.handleSignIn.bind(this);
-    this.handleSignOut = this.handleSignOut.bind(this);
-  }
-  componentDidMount() {
+  useEffect(() => {
     client.on('connected', data => console.log('event happened', data))
     //if the user is already signed in this will succeed
     // If for some reason the user is deleted...
     // clear the auth token from the storage
     client.authenticate().then(auth => {
       console.log('Sign in successful');
-      this.setState({
-        signedIn: true,
-        user: auth.user,
+      dispatch({
+        type: 'SIGN_IN',
+        payload: {
+          signedIn: true,
+          user: auth.user
+        }
       });
     }).catch(() => {
       console.log('Sign in failed')
-      this.setState({
-        signedIn: false,
-        user: {}
-      })
+      dispatch({
+        type: 'SIGN_IN',
+        payload: {
+          signedIn: false,
+          user: {}
+        }
+      });
     });
-
+    // question? Should we still "connect" even if we aren't a registered user?
     client.emit('connected', {
       message: 'User connected'
     });
+  },[]);
+  const handleLogIn = (data) => {
+    console.log('Logging In');
+    console.log(data);
+    const { email, password } = data; 
+    client.authenticate({
+      strategy: 'local',
+      email,
+      password
+    }).then(auth => {
+        console.log('setting props');
+        dispatch({
+          type: 'SIGN_IN',
+          payload: {
+            signedIn: true,
+            user: auth.user
+          }
+        });
+        //gonna leave the "signIn" part out. Don't see why we need it
+    }).catch(e => {
+        console.log('You were not signed in');
+        console.log(e);
+    })
   }
 
-  handleSignIn = () => {
-    client.authenticate().then(auth => {
-      this.setState({
-        signedIn: true,
-        user: auth.user,
-      })
-    });
+  const handleSignOut = () => {
+    client.logout().then(dispatch({
+      type: 'SIGN_OUT'
+    }));
   }
 
-  handleSignOut = () => {
-    client.logout().then(() => {
-      this.setState({
-        signedIn: false,
-        user: {}
-      })
-    });
-  }
-
-  render() {
-    const { signedIn, user } = this.state;
-    return (
+  return (
+    <Store>
       <Router>
       <div className="App">
         <Suspense fallback={<CircularProgress/>}>
-            <Menu handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} signedIn={signedIn} user ={user} />
+            <Menu handleLogIn={handleLogIn} handleSignOut={handleSignOut}/>
             <ul>
               <Switch>
                 <Route exact path="/join/:invite">
-                  {({ match }) => <JoinParty match={match} signedIn={signedIn} user={user}/> }
+                  {({ match }) => <JoinParty match={match}/> }
                 </Route>
                 <Route path="/party">
-                  <Party signedIn={signedIn} user={user}/>
+                  <Party />
                 </Route>
                 <Route exact path="/character">
-                  <CharacterCreation signedIn={signedIn} user={user} />
+                  <CharacterCreation />
                 </Route>
                 <Route path="/character/:id">
-                  {({ match }) => <CharacterEdit match={match} signedIn={signedIn} user={user} /> }
+                  {({ match }) => <CharacterEdit match={match} /> }
                 </Route>
                 <Route path="/user/characters/view">
-                  <ViewCharacters signedIn={signedIn} user={user} />
+                  <ViewCharacters />
+                </Route>
+                <Route path="/signin">
+                  <SignIn />
                 </Route>
                 <Route exact path="/">
-                  <CharacterCreation signedIn={signedIn} user={user}/>
+                  <CharacterCreation />
                 </Route>
                 <Route>
                   404
@@ -103,8 +115,10 @@ class App extends Component {
           </Suspense>
       </div>
       </Router>
-    );
-  }
+    </Store>
+  );
+
 }
+
 
 export default App;

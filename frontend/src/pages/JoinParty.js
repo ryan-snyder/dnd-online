@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -10,12 +10,14 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import client from '../feather/feathers';
+import { Context } from '../Store/Store';
 
 
 
 
 function JoinParty(props) {
-    const { signedIn, user } = props;
+
+    const [state] = useContext(Context);
     const [open, setOpen] = useState(false); 
     const [ characters, setCharacters ] = useState([]);
     const [ character, setCharacter ] = useState({
@@ -24,14 +26,14 @@ function JoinParty(props) {
 
 
     useEffect(() => {
-        client.service('users').get(user._id).then(result => {
+        client.service('users').get(state.user._id).then(result => {
             console.log(result.characters);
             setCharacters(result.characters);
         }).catch((err) => {
             console.log(err);
             setCharacters([]);
         });
-    }, [user]);
+    }, [state]);
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => {
@@ -102,15 +104,10 @@ function JoinParty(props) {
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Join Party</DialogTitle>
-                { signedIn ? renderCharacterSelection() : renderSignIn()}
+                { state.signedIn ? renderCharacterSelection() : renderSignIn()}
             </Dialog>
         </span>
     )
-}
-
-JoinParty.propTypes = {
-    signedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
 }
 
 
