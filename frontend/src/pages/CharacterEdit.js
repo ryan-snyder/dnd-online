@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import client from '../feather/feathers';
 import CharacterCreation from './CharacterCreation';
 
 
 function CharacterEdit(props) {
     const { id } = props.match.params;
-    const {signedIn, user } = props;
     const [character, setCharacter] = useState(undefined);
 
     useEffect(() => {
@@ -25,7 +24,7 @@ function CharacterEdit(props) {
     }
     return (
         <span>
-            <CharacterCreation handleUpdate={handleSave} id={id} character={character} signedIn={signedIn} user={user} message={<p>You are currently editing character {id} </p>}/>
+            <CharacterCreation handleUpdate={handleSave} id={id} character={character} message={<p>You are currently editing character {id} </p>}/>
         </span>
     )
 };

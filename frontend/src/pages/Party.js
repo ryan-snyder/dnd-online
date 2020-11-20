@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,25 +14,28 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import PropTypes from 'prop-types';
 import client from '../feather/feathers';
+import { Context } from '../Store/Store';
 
 
 
 
 function Party(props) {
-    const { signedIn, user } = props;
+    const [state] = useContext(Context);
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
     const [parties, setParties] = useState([]);
 
     useEffect(() => {
-        client.service('users').get(user._id).then(result => {
-            console.log(result.parties);
-            setParties(result.parties);
-        }).catch((err) => {
-            console.log(err);
-            setParties([]);
-        })
-    }, [user]);
+        if(state.signedIn) {
+            client.service('users').get(state.user._id).then(result => {
+                console.log(result.parties);
+                setParties(result.parties);
+            }).catch((err) => {
+                console.log(err);
+                setParties([]);
+            })
+        } 
+    }, [state]);
 
     const handleCreate = () => {
         client.service('party').create({
@@ -58,7 +61,7 @@ function Party(props) {
     return (
         <span>
             <p>Party Creation and Viewer Screen</p>
-            {signedIn ? <p>Welcome {user.email}</p> : <p> Please log in or make an account to create or view your parties</p>}
+            {state.signedIn ? <p>Welcome {state.user.email}</p> : <p> Please log in or make an account to create or view your parties</p>}
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Create a Party
             </Button>
@@ -108,11 +111,5 @@ function Party(props) {
         </span>
     )
 }
-
-Party.propTypes = {
-    signedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
-}
-
 
 export default Party;

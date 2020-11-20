@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
 import client from '../feather/feathers';
+import { Context } from '../Store/Store';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -36,7 +37,8 @@ const useStyles = makeStyles(() => ({
 function CharacterCreation(props) {
     const classes = useStyles();
 
-    const { signedIn, user, id, handleUpdate } = props;
+    const [state,dispatch] = useContext(Context);
+    const { id, handleUpdate } = props;
     const [ options, setOptions ] = useState({});
 
     useEffect(() => {
@@ -113,6 +115,7 @@ function CharacterCreation(props) {
     });
 
     const handleSave = () => {
+        const { user, signedIn } = state;
         console.log(user);
         console.log(character);
         if(signedIn) {
@@ -201,12 +204,12 @@ function CharacterCreation(props) {
      * BUT the above is first
      * 
      * TODO:
-     * Perhaps neaten this up a bit. Move stuff into seperate components?
+     * Perhaps neaten this up a bit. Move stuff into seperate components? 
      */
     return(
         <span>
             <p>Character Creation Screen</p>
-            {props.message || (signedIn ? <p>Welcome {user.email}</p> : <p> You are not logged in but you can still make a character</p>)}
+            {props.message || (state.signedIn ? <p>Welcome {state.user.email}</p> : <p> You are not logged in but you can still make a character</p>)}
             <Button onClick={handleUpdate ? handleUpdate(id, character) : handleSave}>Save</Button>
             <Select
                 value={character.class.name}
@@ -286,8 +289,6 @@ function CharacterCreation(props) {
 }
 
 CharacterCreation.propTypes = {
-    signedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired,
     character: PropTypes.object,
     handleUpdate: PropTypes.func,
     message: PropTypes.element,

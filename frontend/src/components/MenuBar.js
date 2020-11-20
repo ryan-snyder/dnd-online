@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { withRouter } from 'react-router-dom';
 import Login from './login';
+import { Context } from '../Store/Store';
 
 const useStyles = makeStyles({
     button: {
@@ -37,8 +38,14 @@ const useStyles = makeStyles({
  */
 function MenuBar(props) {
     const classes = useStyles();
-    const { signedIn, user, handleLogIn, handleSignOut, onSignInPage} = props;
-    const [value, setValue ] = React.useState(0);
+    const {handleLogIn, handleSignOut} = props;
+    const [state,dispatch] = useContext(Context);
+    const [value, setValue ] = useState(0);
+
+    useEffect(() => {
+        console.log('Rendering...');
+        console.log(state.onSignInPage);
+    })
 
     const handleChange = (event, index) => {
         props.history.push(`${event.currentTarget.getAttribute("to")}`);
@@ -65,7 +72,7 @@ function MenuBar(props) {
                     label={"Manage Party"}
                     to={"/party"}
                 />
-                { signedIn && (
+                { state.signedIn && (
                     <Tab
                         value={2}
                         label={"View Characters"}
@@ -74,7 +81,7 @@ function MenuBar(props) {
                 )}
             </Tabs>
             </Grid>
-            { !onSignInPage && 
+            { !state.onSignInPage && 
                 <Grid
                     container
                     item
@@ -83,7 +90,7 @@ function MenuBar(props) {
                     justify="flex-end"
                 >
                     <Grid item>
-                    <Login classes={classes} handleLogIn={handleLogIn} handleSignOut={handleSignOut} signedIn={signedIn} user ={user} />
+                    <Login classes={classes} handleLogIn={handleLogIn} handleSignOut={handleSignOut}/>
                     </Grid>
                 </Grid>
             }
@@ -94,11 +101,8 @@ function MenuBar(props) {
 
 
 MenuBar.propTypes = {
-    signedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired,
     handleLogIn: PropTypes.func.isRequired,
     handleSignOut: PropTypes.func.isRequired,
-    onSignInPage: PropTypes.bool
 }
 
 

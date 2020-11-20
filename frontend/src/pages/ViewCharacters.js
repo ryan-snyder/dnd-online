@@ -1,28 +1,28 @@
-import React, {useState, useEffect }  from 'react';
+import React, {useState, useEffect, useContext }  from 'react';
 import client from '../feather/feathers';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
-
+import { Context } from '../Store/Store';
 
 
 
 function ViewCharacters(props) {
-    const { signedIn, user } = props;
+    const [state] = useContext(Context);
     const [characters, setCharacters] = useState([]);
 
     useEffect(() => {
-        console.log(user);
-        client.service('users').get(user._id).then(result => {
+        console.log(state);
+        client.service('users').get(state.user._id).then(result => {
             console.log(result.characters);
             setCharacters(result.characters);
         }).catch((err) => {
             console.log(err);
             setCharacters([]);
         })
-    }, [user])
+    }, [state])
     /**
      * For this...do we want to change it back to the way we had it
      * where the user would have some basic info on a character such as name, race, whatever
@@ -31,7 +31,7 @@ function ViewCharacters(props) {
      */
     return (
         <span>
-            {signedIn ? <p>Welcome {user.email}</p> : <p> If you are not logged in and you're on this page, please sign in</p>}
+            {state.signedIn ? <p>Welcome {state.user.email}</p> : <p> If you are not logged in and you're on this page, please sign in</p>}
             <p>View your characters</p>
             { characters.length === 0 ? <p> You don't have any characters</p> : 
             <List>
@@ -50,11 +50,5 @@ function ViewCharacters(props) {
         </span>
     )
 }
-
-ViewCharacters.propTypes = {
-    signedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
-}
-
 
 export default ViewCharacters;
