@@ -16,6 +16,15 @@ exports.Characters = class Characters extends Service {
     return super.create(characterData, params);
   }
 
+  find(params) {
+    const { user } = params;
+
+    return super.find({
+      query: {
+        owner: user._id
+      }
+    });
+  }
 
   // What we should do...is when a user tries to get a character...
   // If they own it they can see it completely
@@ -33,8 +42,21 @@ exports.Characters = class Characters extends Service {
      * That is most likely the most efficient way
      * We should have a seperate function that returns the correct fields
      */
-    
-    return super.get(id, params);
+    logger.info('Fetching character ', id);
+    return super.get(id);
   }
+
+  /**
+   * 
+   * Remove character
+   */
+  remove(id, params) {
+    const { user } = params;
+    logger.info('User is', user);
+
+    return super.remove(id, params);
+  }
+
+
 
 };
