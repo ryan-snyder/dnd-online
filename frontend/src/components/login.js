@@ -18,7 +18,13 @@ function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-
+    const submitData = () => {
+        const data = {
+            email,
+            password
+        };
+        handleLogIn(data);
+    };
     const clearValueAndSignOut = () => {
         setEmail('');
         setPassword('');
@@ -60,7 +66,7 @@ function Login(props) {
                 </Grid>
                 </Grid>
                 <Grid item>
-                    <Button className={classes.button} size="small" color="primary" onClick={handleLogIn}>Login</Button>
+                    <Button className={classes.button} size="small" color="primary" onClick={submitData}>Login</Button>
                     <Button className={classes.button} size="small" color="primary" component={RouterLink} to="/signin">Sign Up Here</Button>
                 </Grid>
             </span>

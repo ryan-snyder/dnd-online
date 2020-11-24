@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useEffect, useContext} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/feathers'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Store, { Context } from '../../Store/Store';
+import { Context } from '../../Store/Store';
 import './App.css';
 
 
@@ -48,9 +48,11 @@ const App = () => {
     });
   },[]);
   const handleLogIn = (data) => {
-    console.log('Logging In');
     console.log(data);
+    console.log('Logging In');
     const { email, password } = data; 
+    console.log(email);
+    console.log(password);
     client.authenticate({
       strategy: 'local',
       email,
@@ -78,7 +80,6 @@ const App = () => {
   }
 
   return (
-    <Store>
       <Router>
       <div className="App">
         <Suspense fallback={<CircularProgress/>}>
@@ -115,7 +116,6 @@ const App = () => {
           </Suspense>
       </div>
       </Router>
-    </Store>
   );
 
 }

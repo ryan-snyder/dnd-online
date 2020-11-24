@@ -114,12 +114,16 @@ function CharacterCreation(props) {
         return entry;
     });
 
+    const handleUpdates = () => {
+        handleUpdate(id, character);
+    }
+
     const handleSave = () => {
         const { user, signedIn } = state;
         console.log(user);
         console.log(character);
         if(signedIn) {
-            client.service('characters').create(character).then(result => {
+            client.service('characters').create(character, {user}).then(result => {
                 console.log(result);
                 console.log(`Created Character for ${user.email}`);
             }).catch((err) => {
@@ -131,7 +135,6 @@ function CharacterCreation(props) {
     }
     // handle change for dropdown lists
     const handleChangeDropDown = (event) => {
-        console.log(handleUpdate);
         const value = options[event.target.name].find((value) => value.name === event.target.value);
         setCharacter(oldCharacter => ({
             ...oldCharacter,
@@ -210,7 +213,7 @@ function CharacterCreation(props) {
         <span>
             <p>Character Creation Screen</p>
             {props.message || (state.signedIn ? <p>Welcome {state.user.email}</p> : <p> You are not logged in but you can still make a character</p>)}
-            <Button onClick={handleUpdate ? handleUpdate(id, character) : handleSave}>Save</Button>
+            <Button onClick={handleUpdate ? handleUpdates : handleSave}>Save</Button>
             <Select
                 value={character.class.name}
                 onChange={handleChangeDropDown}
