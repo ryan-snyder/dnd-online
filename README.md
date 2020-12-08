@@ -102,5 +102,6 @@ See project board for better understanding
 * [ ] upload characteres from other sources
 * [ ] upload custom rules
 * [ ] Create invite link and able to join party from that link
+* [ ] Optimize api calls. Using reducers, maybe?
 * [ ] **STABILITY**
 * [ ] connect to discord?

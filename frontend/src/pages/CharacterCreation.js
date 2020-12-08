@@ -123,7 +123,7 @@ function CharacterCreation(props) {
         console.log(user);
         console.log(character);
         if(signedIn) {
-            client.service('characters').create(character, {user}).then(result => {
+            client.service('characters').create(character, user).then(result => {
                 console.log(result);
                 console.log(`Created Character for ${user.email}`);
             }).catch((err) => {

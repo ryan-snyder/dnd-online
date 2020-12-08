@@ -46,7 +46,6 @@ const create = async (context) => {
           data: result
         };
     } else if (context.path === 'party') {
-      
       const url = `/${shortid.generate()}`;
       console.log(url.valueOf());
       context.data.url = url; 
@@ -67,7 +66,8 @@ const create = async (context) => {
         data: {
           name: result.name,
           id: result._id,
-          inviteUrl: result.inviteURL
+          inviteUrl: result.inviteURL,
+          members: result.members
         }
       };
     }

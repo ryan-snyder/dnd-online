@@ -28,14 +28,12 @@ function Party(props) {
     useEffect(() => {
         if(state.signedIn) {
             client.service('users').get(state.user._id).then(result => {
-                console.log(result.parties);
                 setParties(result.parties);
             }).catch((err) => {
-                console.log(err);
                 setParties([]);
             })
         } 
-    }, [state]);
+    });
 
     const handleCreate = () => {
         client.service('party').create({
@@ -45,7 +43,6 @@ function Party(props) {
         }).catch(err => {
             console.log(err);
         });
-
         handleClose();
     }
     const handleChange = (event) => setName(event.target.value);

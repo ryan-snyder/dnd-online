@@ -1,4 +1,16 @@
 module.exports = function(app) {
+  /**
+   * In the future, this will be used to publish events and update the app
+   * In that way, instead of calling an api function to check for updates, we will just check the channels
+   * As well, this will be used for party events and messages, etc
+   * So its a twofold purpose:
+   * 
+   * 1: Back-end update notifications
+   * 2: User-facing events
+   * 
+   * 
+   * Would also be useful for a mobile app if that ever happens or at least browser notifications
+   */
   if(typeof app.channel !== 'function') {
     // If no real-time functionality has been configured just return
     return;
