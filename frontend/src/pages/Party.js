@@ -15,6 +15,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import PropTypes from 'prop-types';
 import client from '../feather/feathers';
 import { Context } from '../Store/Store';
+import { createParty, getAllParties } from '../api/index';
 
 
 
@@ -27,8 +28,8 @@ function Party(props) {
 
     useEffect(() => {
         if(state.signedIn) {
-            client.service('users').get(state.user._id).then(result => {
-                setParties(result.parties);
+            getAllParties().then(result => {
+                setParties(result.data);
             }).catch((err) => {
                 setParties([]);
             })
@@ -36,9 +37,7 @@ function Party(props) {
     });
 
     const handleCreate = () => {
-        client.service('party').create({
-            name
-        }).then(result => {
+        createParty(name).then(result => {
             console.log(result);
         }).catch(err => {
             console.log(err);

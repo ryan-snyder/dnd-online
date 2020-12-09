@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
 import { Context } from '../Store/Store';
+import { getAllCharacters, deleteCharacter } from '../api/index';
 
 
 
@@ -18,7 +19,7 @@ function ViewCharacters(props) {
 
     useEffect(() => {
         console.log(state);
-        client.service('characters').find().then(result => {
+        getAllCharacters().then(result => {
             console.log(result.data);
             setCharacters(result.data);
         }).catch((err) => {
@@ -29,10 +30,10 @@ function ViewCharacters(props) {
 
     // ideally we move all this to a seperate file or something
     const handleDelete = (id) => {
-        client.service('characters').remove(id).then(result => {
+        deleteCharacter(id).then(result => {
             console.log('Delete successful')
             // seperate function. maybe using global state? idk 
-            client.service('characters').find().then(result => {
+            getAllCharacters().then(result => {
                 setCharacters(result.data);
             }).catch((err) => {
                 console.log(err);

@@ -22,6 +22,7 @@ import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
 import client from '../feather/feathers';
 import { Context } from '../Store/Store';
+import { createCharacter } from '../api/index';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -123,7 +124,7 @@ function CharacterCreation(props) {
         console.log(user);
         console.log(character);
         if(signedIn) {
-            client.service('characters').create(character, user).then(result => {
+            createCharacter(character,user).then(result => {
                 console.log(result);
                 console.log(`Created Character for ${user.email}`);
             }).catch((err) => {

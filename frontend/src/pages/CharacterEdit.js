@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import client from '../feather/feathers';
 import CharacterCreation from './CharacterCreation';
 import { Context } from '../Store/Store';
+import { getCharacter, updateCharacter } from '../api/index';
 
 
 function CharacterEdit(props) {
@@ -10,7 +11,7 @@ function CharacterEdit(props) {
     const [character, setCharacter] = useState(undefined);
 
     useEffect(() => {
-        client.service('characters').get(id).then(result => {
+        getCharacter(id).then(result => {
             console.log(result)
             setCharacter(result.character);
         }).catch((err) => {
@@ -19,7 +20,7 @@ function CharacterEdit(props) {
     },[state]);
 
     const handleSave = (id, characters) => {
-        client.service('characters').patch(id, { character: characters }).then(result => {
+        updateCharacter(id, characters).then(result => {
             console.log(result);
             console.log('Update successful');
         }).catch(err => {

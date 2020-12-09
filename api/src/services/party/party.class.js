@@ -12,7 +12,7 @@ exports.Party = class Party extends Service {
     const partyData = {
       name,
       members: [{
-        id: user,
+        id: user._id,
         permission: 'admin',
         character: data.character || null,
       }],
@@ -42,5 +42,19 @@ exports.Party = class Party extends Service {
     };
 
     return super.patch(id, party, params);
+  }
+
+  find(params) {
+    const { user } = params;
+
+    return super.find({
+      query: {
+        members: {
+          $elemMatch: {
+            id: user._id
+          }
+        }
+      }
+    });
   }
 };
