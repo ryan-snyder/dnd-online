@@ -16,11 +16,10 @@ function CharacterEdit(props) {
         }).catch((err) => {
             console.log(err);
         });
-        
    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[state]);
 
-    const handleSave = (id, characters) => {
+    const handleSave = (characters) => {
         updateCharacter(id, characters).then(result => {
             console.log(result);
             console.log('Update successful');
@@ -33,7 +32,7 @@ function CharacterEdit(props) {
             <CharacterCreation handleUpdate={handleSave} id={id} character={character} message={<p>You are currently editing character {id} </p>}/>
         </span>
     )
-};
+}
 
 
 export default CharacterEdit;

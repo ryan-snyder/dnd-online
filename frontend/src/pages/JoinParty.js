@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import client from '../feather/feathers';
+import client from '../feather/client';
 import { Context } from '../Store/Store';
 
 
@@ -16,7 +16,7 @@ import { Context } from '../Store/Store';
 function JoinParty(props) {
 
     const [state] = useContext(Context);
-    const [open, setOpen] = useState(false); 
+    const [open, setOpen] = useState(false);
     const [ characters, setCharacters ] = useState([]);
     const [ character, setCharacter ] = useState({
         name: ''

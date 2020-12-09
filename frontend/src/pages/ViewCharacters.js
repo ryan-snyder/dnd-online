@@ -51,7 +51,7 @@ function ViewCharacters(props) {
         <span>
             {state.signedIn ? <p>Welcome {state.user.email}</p> : <p> If you are not logged in and you're on this page, please sign in</p>}
             <p>View your characters</p>
-            { characters.length === 0 ? <p> You don't have any characters</p> : 
+            { characters.length === 0 ? <p> You don't have any characters</p> :
             <List>
             {characters.map((character, index) => {
                     return (
@@ -66,7 +66,7 @@ function ViewCharacters(props) {
                                 </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>
-                    )  
+                    )
             })}
             </List>
             }
