@@ -1,9 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import client from '../feather/feathers';
 import { useForm } from "react-hook-form";
@@ -46,6 +44,8 @@ function SignIn(props) {
                 payload:false
             });
         }
+        
+   // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
     
     return (
