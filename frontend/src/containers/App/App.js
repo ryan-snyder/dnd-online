@@ -16,7 +16,7 @@ const JoinParty = lazy(() => import('../../pages/JoinParty'));
 const SignIn = lazy(() => import('../../pages/SignIn'));
 
 const App = () => {
-  const [state, dispatch] = useContext(Context);
+  const [dispatch] = useContext(Context);
 
   useEffect(() => {
     client.on('connected', data => console.log('event happened', data))
@@ -46,6 +46,8 @@ const App = () => {
     client.emit('connected', {
       message: 'User connected'
     });
+    
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   const handleLogIn = (data) => {
     console.log(data);
