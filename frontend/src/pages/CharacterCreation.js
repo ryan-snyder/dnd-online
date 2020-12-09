@@ -18,7 +18,6 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
-import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
 import client from '../feather/client';
 import { Context } from '../Store/Store';
