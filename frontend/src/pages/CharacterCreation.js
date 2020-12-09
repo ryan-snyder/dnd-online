@@ -18,10 +18,10 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
-import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
-import client from '../feather/feathers';
+import client from '../feather/client';
 import { Context } from '../Store/Store';
+import { defaultCharacter, rollStats } from '../util/util';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -43,7 +43,7 @@ function CharacterCreation(props) {
 
     useEffect(() => {
         setOptions({
-            class: getClasses() 
+            class: getClasses()
         });
     }, [])
     /**
@@ -51,63 +51,16 @@ function CharacterCreation(props) {
      * I.E class, race, and background can all modify our ability scores
      * level is self explanatory
      * spells is again self explanatory since you can have more than one spell
-     * 
      */
     // Should we remember stats on a page reload?
     // Or would they have to save it?
-    const [ character, setCharacter] = useState({
-        description: {
-            name: '',
-            playerName: '',
-            age: '0',
-            gender: '',
-            height: '',
-            weight: ''
-        },
-        class: {
-            name: ''
-        },
-        race: {
-            name: ''
-        },
-        level: 1,
-        alignment: '',
-        background: {
-            name: ''
-        },
-        spells: {
-            cantrips: [{
-                name: ''
-            }],
-            spells: [{
-                name: ''
-            }]
-        },
-        equipment: [],
-        stats: {
-            abilities: {
-                str: 8,
-                dex: 8,
-                con: 8,
-                int: 8, 
-                wis: 8,
-                cha: 8
-            },
-            feats: [{
-                name: ''
-            }]
-        },
-        proficiencies: [{
-            name: ''
-        }]
-    });
+    const [ character, setCharacter] = useState(defaultCharacter);
 
     useEffect(() => {
         console.log(props)
         if(props.character) {
             setCharacter(props.character);
         }
-        
    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.character]);
 
@@ -137,7 +90,7 @@ function CharacterCreation(props) {
     }
     // handle change for dropdown lists
     const handleChangeDropDown = (event) => {
-        const value = options[event.target.name].find((value) => value.name === event.target.value);
+        const value = options[event.target.name].find((val) => val.name === event.target.value);
         setCharacter(oldCharacter => ({
             ...oldCharacter,
             [event.target.name]: value || {
@@ -186,30 +139,20 @@ function CharacterCreation(props) {
     const generateValue = () => {
         // What this will do is generate our array of "stats"
         // and then apply them to our object
-        // We will then allow the user to either roll again, 
+        // We will then allow the user to either roll again,
         // or shift the values around
-        for ( let key in character.stats.abilities ) {
-            const { rolls } = parseAndRoll('4d6');
-            rolls.sort().splice(0, 1);
-            const stat = rolls.reduce((a, c) => a + c);
-            character.stats.abilities[key] = stat;
-        }
-        setCharacter({...character, stats: character.stats});
+        setCharacter({...character, stats: rollStats(character.stats)});
     }
     /**
      * All we want to do is make some basic stuff
      * Main things to implement would be stats,
      * classes
      * some basic spells, etc
-     * 
-     * 
-     * 
      * We should prompt them to save if they try to navigate away...
      * As well if they're logged in, show them a list of characters to edit or let them make a new one
      * BUT the above is first
-     * 
      * TODO:
-     * Perhaps neaten this up a bit. Move stuff into seperate components? 
+     * Perhaps neaten this up a bit. Move stuff into seperate components?
      */
     return(
         <span>
@@ -242,7 +185,7 @@ function CharacterCreation(props) {
                     Character Details:
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                    {Object.keys(character.description).map((keyName, keyIndex) => 
+                    {Object.keys(character.description).map((keyName, keyIndex) =>
                         <FormControl key={keyIndex}>
                             <TextField
                                 name={keyName}
@@ -261,7 +204,7 @@ function CharacterCreation(props) {
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon/>}
                 >
-                    Character Stats: 
+                    Character Stats:
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <List className={classes.root}>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext }  from 'react';
-import client from '../feather/feathers';
+import client from '../feather/client';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -30,7 +30,7 @@ function ViewCharacters(props) {
     const handleDelete = (id) => {
         client.service('characters').remove(id).then(result => {
             console.log('Delete successful')
-            // seperate function. maybe using global state? idk 
+            // seperate function. maybe using global state? idk
             client.service('characters').find().then(result => {
                 setCharacters(result.data);
             }).catch((err) => {
@@ -51,7 +51,7 @@ function ViewCharacters(props) {
         <span>
             {state.signedIn ? <p>Welcome {state.user.email}</p> : <p> If you are not logged in and you're on this page, please sign in</p>}
             <p>View your characters</p>
-            { characters.length === 0 ? <p> You don't have any characters</p> : 
+            { characters.length === 0 ? <p> You don't have any characters</p> :
             <List>
             {characters.map((character, index) => {
                     return (
@@ -66,7 +66,7 @@ function ViewCharacters(props) {
                                 </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>
-                    )  
+                    )
             })}
             </List>
             }
