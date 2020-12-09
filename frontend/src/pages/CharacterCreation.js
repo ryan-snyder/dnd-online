@@ -22,6 +22,7 @@ import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
 import client from '../feather/client';
 import { Context } from '../Store/Store';
+import { defaultCharacter, rollStats } from '../util/util';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -55,52 +56,7 @@ function CharacterCreation(props) {
      */
     // Should we remember stats on a page reload?
     // Or would they have to save it?
-    const [ character, setCharacter] = useState({
-        description: {
-            name: '',
-            playerName: '',
-            age: '0',
-            gender: '',
-            height: '',
-            weight: ''
-        },
-        class: {
-            name: ''
-        },
-        race: {
-            name: ''
-        },
-        level: 1,
-        alignment: '',
-        background: {
-            name: ''
-        },
-        spells: {
-            cantrips: [{
-                name: ''
-            }],
-            spells: [{
-                name: ''
-            }]
-        },
-        equipment: [],
-        stats: {
-            abilities: {
-                str: 8,
-                dex: 8,
-                con: 8,
-                int: 8, 
-                wis: 8,
-                cha: 8
-            },
-            feats: [{
-                name: ''
-            }]
-        },
-        proficiencies: [{
-            name: ''
-        }]
-    });
+    const [ character, setCharacter] = useState(defaultCharacter);
 
     useEffect(() => {
         console.log(props)
@@ -188,13 +144,7 @@ function CharacterCreation(props) {
         // and then apply them to our object
         // We will then allow the user to either roll again, 
         // or shift the values around
-        for ( let key in character.stats.abilities ) {
-            const { rolls } = parseAndRoll('4d6');
-            rolls.sort().splice(0, 1);
-            const stat = rolls.reduce((a, c) => a + c);
-            character.stats.abilities[key] = stat;
-        }
-        setCharacter({...character, stats: character.stats});
+        setCharacter({...character, stats: rollStats(character.stats)});
     }
     /**
      * All we want to do is make some basic stuff
