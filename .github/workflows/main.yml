@@ -25,3 +25,5 @@ jobs:
         uses: takanabe/github-actions-automate-projects@v0.0.2
         env:
           GITHUB_PROJECT_URL: https://github.com/ryan-snyder/dnd-project-temp/projects/1
+          GITHUB_PROJECT_COLUMN_NAME: To do
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
