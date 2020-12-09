@@ -1,3 +1,8 @@
+/**
+ * TODO:
+ * Hook up to redux/redux-saga
+ * Add character/party actions
+ */
 const Reducer = (state, action) => {
     console.log(`action is ${action.type} with ${action.payload}`);
     switch (action.type) {

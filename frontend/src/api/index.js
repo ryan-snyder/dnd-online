@@ -1,26 +1,12 @@
 
 /**
  * Index file for api folder
- * 
- * 
- * 
  * This will implement superagent and add handlers for api requests to
  * dnd5e.co
- * 
- * 
- * 
  * TODO:
- * Download this api myself because right now you can't make browser requests with it which is dumb
- * 
- * 
- * or we could serve it myself but I'd rather not
- * 
- * for now, im going to put our backend api calls in here.
- * Should make a seperate file for them eventually
- * 
+ * Move to redux-saga file for api calls
  */
-
-import client from '../feather/feathers';
+import client from '../feather/client';
 
 export const getClasses = () => [
     {
@@ -56,8 +42,5 @@ export const createParty = (name) => {
         name
     });
 }
-
-
 //export const getSpells = (query = {}) => superagent.get(`${baseUrl}spells`).query(query);
-
 //export const getFeatures = (query = {}) => superagent.get(`${baseUrl}features`).query(query);

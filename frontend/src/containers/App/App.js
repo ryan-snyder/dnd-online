@@ -33,6 +33,9 @@ const App = () => {
    *  ids
    * ]
    * }
+   * TODO:
+   * Hook up to redux-saga/redux
+   * Fetch characters/parties on first load
    */
   useEffect(() => {
     client.on('connected', data => console.log('event happened', data))
