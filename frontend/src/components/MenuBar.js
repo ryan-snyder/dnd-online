@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 function MenuBar(props) {
     const classes = useStyles();
     const {handleLogIn, handleSignOut} = props;
-    const [state,dispatch] = useContext(Context);
+    const [state] = useContext(Context);
     const [value, setValue ] = useState(0);
 
     useEffect(() => {
