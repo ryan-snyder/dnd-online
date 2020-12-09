@@ -21,7 +21,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { getClasses } from '../api';
 import { Context } from '../Store/Store';
 import { createCharacter } from '../api/index';
-import { Context } from '../Store/Store';
 import { defaultCharacter, rollStats } from '../util/util';
 
 const useStyles = makeStyles(() => ({
