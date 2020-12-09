@@ -20,7 +20,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
-import client from '../feather/feathers';
+import client from '../feather/client';
 import { Context } from '../Store/Store';
 
 const useStyles = makeStyles(() => ({
@@ -137,7 +137,7 @@ function CharacterCreation(props) {
     }
     // handle change for dropdown lists
     const handleChangeDropDown = (event) => {
-        const value = options[event.target.name].find((value) => value.name === event.target.value);
+        const value = options[event.target.name].find((val) => val.name === event.target.value);
         setCharacter(oldCharacter => ({
             ...oldCharacter,
             [event.target.name]: value || {

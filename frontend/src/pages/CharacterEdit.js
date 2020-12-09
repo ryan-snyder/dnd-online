@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import client from '../feather/feathers';
+import client from '../feather/client';
 import CharacterCreation from './CharacterCreation';
 import { Context } from '../Store/Store';
 
@@ -20,7 +20,7 @@ function CharacterEdit(props) {
    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[state]);
 
-    const handleSave = (id, characters) => {
+    const handleSave = (characters) => {
         client.service('characters').patch(id, { character: characters }).then(result => {
             console.log(result);
             console.log('Update successful');
@@ -33,7 +33,7 @@ function CharacterEdit(props) {
             <CharacterCreation handleUpdate={handleSave} id={id} character={character} message={<p>You are currently editing character {id} </p>}/>
         </span>
     )
-};
+}
 
 
 export default CharacterEdit;

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import client from '../feather/feathers';
+import client from '../feather/client';
 import { useForm } from "react-hook-form";
 import { Context } from '../Store/Store';
 
