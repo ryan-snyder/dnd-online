@@ -19,7 +19,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: All in one project
+      - name: Automate projects
         # You may pin to the exact commit or the version.
-        # uses: masutaka/github-actions-all-in-one-project@630cf83d0b14f1ba7b5e201523e8e07c2c8cd3fa
-        uses: masutaka/github-actions-all-in-one-project@1.1.0
+        # uses: takanabe/github-actions-automate-projects@5d004c140c65fa8b4ef3b18a38219ce680bce816
+        uses: takanabe/github-actions-automate-projects@v0.0.2
