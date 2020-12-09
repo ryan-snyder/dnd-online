@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import CharacterCreation from './CharacterCreation';
 import { Context } from '../Store/Store';
-import { getCharacter, updateCharacter } from '../api/index';
 
 
 function CharacterEdit(props) {

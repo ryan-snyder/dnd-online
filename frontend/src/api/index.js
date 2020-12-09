@@ -17,30 +17,41 @@ export const getClasses = () => [
     }
 ];
 
-export const createCharacter = (character, user) => {
+const createCharacter = (character, user) => {
     return client.service('characters').create(character, user);
 }
 
-export const getCharacter = (id) => {
+const getCharacter = (id) => {
     return client.service('characters').get(id);
 }
 
-export const updateCharacter = (id, characters) => {
+const updateCharacter = (id, characters) => {
     return client.service('characters').patch(id, { character: characters });
 }
 
-export const deleteCharacter = (id) => {
+const deleteCharacter = (id) => {
     return client.service('characters').remove(id);
 }
 
-export const getAllCharacters =  () => client.service('characters').find();
+const getAllCharacters =  () => client.service('characters').find();
 
-export const getAllParties = () => client.service('party').find();
+const getAllParties = () => client.service('party').find();
 
-export const createParty = (name) => {
+const createParty = (name) => {
     return client.service('party').create({
         name
     });
 }
+
+const Api = {
+    createCharacter,
+    getCharacter,
+    updateCharacter,
+    deleteCharacter,
+    getAllCharacters,
+    getAllParties,
+    createParty
+};
 //export const getSpells = (query = {}) => superagent.get(`${baseUrl}spells`).query(query);
 //export const getFeatures = (query = {}) => superagent.get(`${baseUrl}features`).query(query);
+export default Api;

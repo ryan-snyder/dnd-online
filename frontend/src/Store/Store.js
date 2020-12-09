@@ -1,25 +1,18 @@
 import React, {createContext, useReducer} from "react";
-import Reducer from '../Reducer/Reducer'
+import { reducer, initial } from '../Reducer/Reducer'
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 /**
  * TODO:
  * Change this to use redux/redux-saga
  */
-const initialState = {
-    signedIn: false,
-    user: {},
-    onSignInPage: false,
-    characters: [],
-    parties: []
-};
 
-const Store = ({children}) => {
-    const [state, dispatch] = useReducer(Reducer, initialState);
-    return (
-        <Context.Provider value={[state, dispatch]}>
-            {children}
-        </Context.Provider>
-    )
-};
+export const saga = createSagaMiddleware(); 
 
-export const Context = createContext(initialState);
+const Store = createStore(
+    reducer,
+    applyMiddleware(saga)
+)
+
+export const Context = createContext(initial);
 export default Store;

@@ -1,31 +1,34 @@
+import autodux from 'autodux';
 /**
  * TODO:
  * Hook up to redux/redux-saga
  * Add character/party actions
  */
-const Reducer = (state, action) => {
-    console.log(`action is ${action.type} with ${action.payload}`);
-    switch (action.type) {
-        case 'REGISTER': 
-            return {
-                ...state,
-                onSignInPage: action.payload
-            }
-        case 'SIGN_IN':
-            return {
-                ...state,
-                signedIn: action.payload.signedIn,
-                user: action.payload.user
-            }
-        case 'SIGN_OUT':
-            return {
-                ...state,
-                signedIn: false,
-                user: {}
-            }
-        default:
-            return state;
+export const {
+    reducer,
+    initial,
+    actions: {
+      signIn,
+      signOut,
+      register,
+      getCharacter,
+      getCharacters,
+      getParties,
+      createCharacter
+      
+    },
+  } = autodux({
+    // the slice of state your reducer controls
+    // The initial value of your reducer state
+    initial:  {
+        signedIn: false,
+        user: {},
+        onSignInPage: false,
+        characters: [],
+        parties: [],
+        currentCharacter: {}
     }
-};
-
-export default Reducer;
+    // No need to implement switching logic -- it's
+    // done for you.
+    // No need to select the state slice -- it's done for you.
+  });

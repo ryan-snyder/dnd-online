@@ -20,8 +20,8 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { getClasses } from '../api';
 import { Context } from '../Store/Store';
-import { createCharacter } from '../api/index';
 import { defaultCharacter, rollStats } from '../util/util';
+import { actions } from '../Reducer/Reducer';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -78,12 +78,7 @@ function CharacterCreation(props) {
         console.log(user);
         console.log(character);
         if(signedIn) {
-            createCharacter(character,user).then(result => {
-                console.log(result);
-                console.log(`Created Character for ${user.email}`);
-            }).catch((err) => {
-                console.log(err);
-            });
+            actions.createCharacter(user, character);
         } else {
             console.log('Show a snackbar or popup asking them to make an account...');
         }

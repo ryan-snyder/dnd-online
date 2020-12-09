@@ -7,7 +7,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Context } from '../Store/Store';
-import { getAllCharacters, deleteCharacter } from '../api/index';
 
 
 
