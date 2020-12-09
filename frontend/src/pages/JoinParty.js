@@ -16,7 +16,7 @@ import { Context } from '../Store/Store';
 function JoinParty(props) {
 
     const [state] = useContext(Context);
-    const [open, setOpen] = useState(false); 
+    const [open, setOpen] = useState(false);
     const [ characters, setCharacters ] = useState([]);
     const [ character, setCharacter ] = useState({
         name: ''

@@ -25,8 +25,6 @@ function SignIn(props) {
             }
         });
         history.push('/character');
-
-
     }).catch((e) => {
         setError({
             other: 'This user already exists. Please use a different email'
@@ -44,13 +42,11 @@ function SignIn(props) {
                 payload:false
             });
         }
-        
    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
-    
     return (
         <Grid>
-        { state.onSignInPage && 
+        { state.onSignInPage &&
         <form onSubmit={handleSubmit(onSubmit)}>
         {/* register your input into the hook by invoking the "register" function */}
                     <Grid
@@ -58,7 +54,7 @@ function SignIn(props) {
                     direction="row"
                     spacing={2}
                     justify="center"
-                    > 
+                    >
                     <Grid item>
                     <FormControl margin="dense">
                         <TextField
@@ -67,7 +63,6 @@ function SignIn(props) {
                             label="email"
                             name="email"
                         />
-
                     </FormControl>
                     </Grid>
                     <Grid item>
@@ -83,22 +78,21 @@ function SignIn(props) {
                     </Grid>
                     </Grid>
             <input type="submit" />
-            {errors.email && 
+            {errors.email &&
             <Grid>
                 <p>An email is required</p>
             </Grid>
             }
-            {errors.password && 
+            {errors.password &&
             <Grid>
                 <p>A password is required</p>
             </Grid>
             }
-            {error.other && 
+            {error.other &&
             <Grid>
                 <p>{error.other}</p>
             </Grid>
             }
-            
         </form>
         }
         </Grid>

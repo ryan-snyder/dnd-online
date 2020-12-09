@@ -33,7 +33,7 @@ function Party(props) {
                 console.log(err);
                 setParties([]);
             })
-        } 
+        }
     }, [state]);
 
     const handleCreate = () => {
@@ -53,7 +53,6 @@ function Party(props) {
         setName('');
         setOpen(false)
     };
-
     // Change party list to expansion panel?
     // So that you can see current members?
     // Or should you have to edit it in order to see that
@@ -105,7 +104,7 @@ function Party(props) {
                                 <Link to={`/party/${party.id}`}><Button>View Party</Button></Link>
                             </ExpansionPanelActions>
                         </ExpansionPanel>
-                    )  
+                    )
             })}
         </span>
     )

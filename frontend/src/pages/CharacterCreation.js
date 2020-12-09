@@ -43,7 +43,7 @@ function CharacterCreation(props) {
 
     useEffect(() => {
         setOptions({
-            class: getClasses() 
+            class: getClasses()
         });
     }, [])
     /**
@@ -51,7 +51,6 @@ function CharacterCreation(props) {
      * I.E class, race, and background can all modify our ability scores
      * level is self explanatory
      * spells is again self explanatory since you can have more than one spell
-     * 
      */
     // Should we remember stats on a page reload?
     // Or would they have to save it?
@@ -62,7 +61,6 @@ function CharacterCreation(props) {
         if(props.character) {
             setCharacter(props.character);
         }
-        
    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.character]);
 
@@ -141,7 +139,7 @@ function CharacterCreation(props) {
     const generateValue = () => {
         // What this will do is generate our array of "stats"
         // and then apply them to our object
-        // We will then allow the user to either roll again, 
+        // We will then allow the user to either roll again,
         // or shift the values around
         setCharacter({...character, stats: rollStats(character.stats)});
     }
@@ -150,15 +148,11 @@ function CharacterCreation(props) {
      * Main things to implement would be stats,
      * classes
      * some basic spells, etc
-     * 
-     * 
-     * 
      * We should prompt them to save if they try to navigate away...
      * As well if they're logged in, show them a list of characters to edit or let them make a new one
      * BUT the above is first
-     * 
      * TODO:
-     * Perhaps neaten this up a bit. Move stuff into seperate components? 
+     * Perhaps neaten this up a bit. Move stuff into seperate components?
      */
     return(
         <span>
@@ -191,7 +185,7 @@ function CharacterCreation(props) {
                     Character Details:
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                    {Object.keys(character.description).map((keyName, keyIndex) => 
+                    {Object.keys(character.description).map((keyName, keyIndex) =>
                         <FormControl key={keyIndex}>
                             <TextField
                                 name={keyName}
@@ -210,7 +204,7 @@ function CharacterCreation(props) {
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon/>}
                 >
-                    Character Stats: 
+                    Character Stats:
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <List className={classes.root}>

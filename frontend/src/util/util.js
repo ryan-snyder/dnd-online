@@ -34,7 +34,7 @@ export const defaultCharacter = {
             str: 8,
             dex: 8,
             con: 8,
-            int: 8, 
+            int: 8,
             wis: 8,
             cha: 8
         },
@@ -47,11 +47,11 @@ export const defaultCharacter = {
     }]
 };
 export const rollStats = (stats) => {
-    for ( let key in stats.abilities ) {
+    for ( const key in stats.abilities ) {
         const { rolls } = parseAndRoll('4d6');
         rolls.sort().splice(0, 1);
         const stat = rolls.reduce((a, c) => a + c);
         stats.abilities[key] = stat;
     }
-    return stats; 
+    return stats;
 }
