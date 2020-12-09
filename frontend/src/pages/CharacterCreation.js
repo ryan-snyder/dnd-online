@@ -20,7 +20,6 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { parseAndRoll } from 'roll-parser';
 import { getClasses } from '../api';
-import client from '../feather/feathers';
 import { Context } from '../Store/Store';
 import { createCharacter } from '../api/index';
 

@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext }  from 'react';
-import client from '../feather/feathers';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

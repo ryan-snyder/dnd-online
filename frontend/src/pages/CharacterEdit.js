@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import client from '../feather/feathers';
 import CharacterCreation from './CharacterCreation';
 import { Context } from '../Store/Store';
 import { getCharacter, updateCharacter } from '../api/index';
