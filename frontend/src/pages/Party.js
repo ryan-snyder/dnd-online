@@ -12,7 +12,6 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import PropTypes from 'prop-types';
 import client from '../feather/feathers';
 import { Context } from '../Store/Store';
 import { createParty, getAllParties } from '../api/index';

@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
 function CharacterCreation(props) {
     const classes = useStyles();
 
-    const [state,dispatch] = useContext(Context);
+    const [state] = useContext(Context);
     const { id, handleUpdate } = props;
     const [ options, setOptions ] = useState({});
 
@@ -108,6 +108,8 @@ function CharacterCreation(props) {
         if(props.character) {
             setCharacter(props.character);
         }
+        
+   // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.character]);
 
     const returnStats = (values) => Object.entries(character.stats.abilities).map((entry, index) => {

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import client from '../feather/feathers';
 import { Context } from '../Store/Store';
 
 import { Link as RouterLink } from 'react-router-dom';
@@ -14,7 +13,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // one for actual sign up page, and one for menubar
 function Login(props) {
     const { handleLogIn, handleSignOut, classes } = props; 
-    const [state,dispatch] = useContext(Context);
+    const [state] = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
