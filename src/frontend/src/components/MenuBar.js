@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { withRouter } from 'react-router-dom';
 import Login from './login';
-import { Context } from '../Store/Store';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
     button: {
@@ -37,15 +37,11 @@ const useStyles = makeStyles({
  * Regardless, I don't care right now
  */
 function MenuBar(props) {
+    const signedIn = useSelector(state => state.signedIn);
+    const onSignInPage = useSelector(state => state.onSignInPage);
     const classes = useStyles();
     const {handleLogIn, handleSignOut} = props;
-    const [state] = useContext(Context);
     const [value, setValue ] = useState(0);
-
-    useEffect(() => {
-        console.log('Rendering...');
-        console.log(state.onSignInPage);
-    })
 
     const handleChange = (event, index) => {
         props.history.push(`${event.currentTarget.getAttribute("to")}`);
@@ -72,7 +68,7 @@ function MenuBar(props) {
                     label={"Manage Party"}
                     to={"/party"}
                 />
-                { state.signedIn && (
+                { signedIn && (
                     <Tab
                         value={2}
                         label={"View Characters"}
@@ -81,7 +77,7 @@ function MenuBar(props) {
                 )}
             </Tabs>
             </Grid>
-            { !state.onSignInPage && 
+            { !onSignInPage && 
                 <Grid
                     container
                     item

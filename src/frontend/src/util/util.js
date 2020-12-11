@@ -46,6 +46,7 @@ export const defaultCharacter = {
         name: ''
     }]
 };
+
 export const rollStats = (stats) => {
     for ( const key in stats.abilities ) {
         const { rolls } = parseAndRoll('4d6');

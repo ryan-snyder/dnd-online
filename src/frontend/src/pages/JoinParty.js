@@ -8,14 +8,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import client from '../feather/client';
-import { Context } from '../Store/Store';
+import { useSelector } from 'react-redux';
 
 
 
 
 function JoinParty(props) {
-
-    const [state] = useContext(Context);
+    const signedIn = useSelector(state => state.signedIn);
+    const id = useSelector(state => state.user._id);
     const [open, setOpen] = useState(false);
     const [ characters, setCharacters ] = useState([]);
     const [ character, setCharacter ] = useState({
@@ -24,14 +24,14 @@ function JoinParty(props) {
 
 
     useEffect(() => {
-        client.service('users').get(state.user._id).then(result => {
+        client.service('users').get(id).then(result => {
             console.log(result.characters);
             setCharacters(result.characters);
         }).catch((err) => {
             console.log(err);
             setCharacters([]);
         });
-    }, [state]);
+    }, []);
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => {
@@ -102,7 +102,7 @@ function JoinParty(props) {
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Join Party</DialogTitle>
-                { state.signedIn ? renderCharacterSelection() : renderSignIn()}
+                { signedIn ? renderCharacterSelection() : renderSignIn()}
             </Dialog>
         </span>
     )

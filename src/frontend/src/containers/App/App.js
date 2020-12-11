@@ -2,7 +2,6 @@ import React, { Suspense, lazy, useEffect, useContext} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/client'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Context } from '../../Store/Store';
 import './App.css';
 
 
@@ -13,11 +12,9 @@ const Party = lazy(() => import('../../pages/Party'));
 const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
 const CharacterEdit = lazy(() => import('../../pages/CharacterEdit'));
 const JoinParty = lazy(() => import('../../pages/JoinParty'));
-const SignIn = lazy(() => import('../../pages/SignIn'));
+const SignInPage = lazy(() => import('../../pages/SignIn'));
 
 const App = () => {
-  const [dispatch] = useContext(Context);
-
   /**
    * When we sign in, we should make required api calls and pass into state
    * that way, we don't have to make multiple api calls on pages
@@ -44,22 +41,9 @@ const App = () => {
     // clear the auth token from the storage
     client.authenticate().then(auth => {
       console.log('Sign in successful');
-      dispatch({
-        type: 'SIGN_IN',
-        payload: {
-          signedIn: true,
-          user: auth.user
-        }
-      });
     }).catch(() => {
-      console.log('Sign in failed')
-      dispatch({
-        type: 'SIGN_IN',
-        payload: {
-          signedIn: false,
-          user: {}
-        }
-      });
+      console.log('Sign in failed');
+      
     });
     // question? Should we still "connect" even if we aren't a registered user?
     client.emit('connected', {
@@ -79,13 +63,6 @@ const App = () => {
       password
     }).then(auth => {
         console.log('setting props');
-        dispatch({
-          type: 'SIGN_IN',
-          payload: {
-            signedIn: true,
-            user: auth.user
-          }
-        });
         //gonna leave the "signIn" part out. Don't see why we need it
     }).catch(e => {
         console.log('You were not signed in');
@@ -94,9 +71,8 @@ const App = () => {
   }
 
   const handleSignOut = () => {
-    client.logout().then(dispatch({
-      type: 'SIGN_OUT'
-    }));
+    console.log('Signing out');
+    //client.logout().then(signOut({signedIn: false, user: {}}));
   }
 
   return (
@@ -124,7 +100,7 @@ const App = () => {
                   <ViewCharacters />
                 </Route>
                 <Route path="/signin">
-                  <SignIn />
+                  <SignInPage />
                 </Route>
                 <Route exact path="/">
                   <CharacterCreation />

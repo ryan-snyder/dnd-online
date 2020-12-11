@@ -4,16 +4,17 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { Context } from '../Store/Store';
 
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 // seperate into multiple components????
 // one for actual sign up page, and one for menubar
 function Login(props) {
+    const signedIn = useSelector(state => state.signedIn);
+    const user = useSelector(state => state.user);
     const { handleLogIn, handleSignOut, classes } = props; 
-    const [state] = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -73,17 +74,17 @@ function Login(props) {
     }
 
     const renderLoggedIn = () => {
-        const { user } = state; 
+        const { email } = user;
         return (
             <div>
-                <Grid item>{user.email}</Grid>
+                <Grid item>{email}</Grid>
                 <Grid item><Button color="secondary" onClick={clearValueAndSignOut}> Sign Out</Button></Grid>
             </div>
         )
     }
 
     return (
-            state.signedIn ? renderLoggedIn() : renderLogin()
+            signedIn ? renderLoggedIn() : renderLogin()
     )
 }
 

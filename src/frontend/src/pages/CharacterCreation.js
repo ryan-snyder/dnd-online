@@ -19,9 +19,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { getClasses } from '../api';
-import { Context } from '../Store/Store';
 import { defaultCharacter, rollStats } from '../util/util';
-import { actions } from '../Reducer/Reducer';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -35,9 +34,9 @@ const useStyles = makeStyles(() => ({
   }));
 
 function CharacterCreation(props) {
+    const user = useSelector(state => state.user);
+    const signedIn = useSelector(state => state.signedIn);
     const classes = useStyles();
-
-    const [state] = useContext(Context);
     const { id, handleUpdate } = props;
     const [ options, setOptions ] = useState({});
 
@@ -74,11 +73,11 @@ function CharacterCreation(props) {
     }
 
     const handleSave = () => {
-        const { user, signedIn } = state;
+        
         console.log(user);
         console.log(character);
         if(signedIn) {
-            actions.createCharacter(user, character);
+            console.log('Creating character');
         } else {
             console.log('Show a snackbar or popup asking them to make an account...');
         }
@@ -152,7 +151,7 @@ function CharacterCreation(props) {
     return(
         <span>
             <p>Character Creation Screen</p>
-            {props.message || (state.signedIn ? <p>Welcome {state.user.email}</p> : <p> You are not logged in but you can still make a character</p>)}
+            {props.message || (signedIn ? <p>Welcome {user.email}</p> : <p> You are not logged in but you can still make a character</p>)}
             <Button onClick={handleUpdate ? handleUpdates : handleSave}>Save</Button>
             <Select
                 value={character.class.name}

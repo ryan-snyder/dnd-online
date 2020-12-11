@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import client from '../feather/client';
 import { useForm } from "react-hook-form";
-import { Context } from '../Store/Store';
+import { useSelector } from 'react-redux';
 
 
 function SignIn(props) {
-    const [state, dispatch] = useContext(Context);
+    const onSignInPage = useSelector(state => state.onSignInPage);
     const { register, handleSubmit, errors } = useForm();
     const [error, setError] = useState({});
     const history = useHistory();
@@ -17,13 +17,6 @@ function SignIn(props) {
         setError({});
         console.log('created user');
         console.log('signing in');
-        dispatch({
-            type: 'SIGN_IN',
-            payload: {
-                signedIn: true,
-                user
-            }
-        });
         history.push('/character');
     }).catch((e) => {
         setError({
@@ -32,21 +25,13 @@ function SignIn(props) {
     });
 
     useEffect(() => {
-        dispatch({
-            type: 'REGISTER',
-            payload: true
-        });
         return function cleanup() {
-            dispatch({
-                type: 'REGISTER',
-                payload:false
-            });
         }
    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
     return (
         <Grid>
-        { state.onSignInPage &&
+        { onSignInPage &&
         <form onSubmit={handleSubmit(onSubmit)}>
         {/* register your input into the hook by invoking the "register" function */}
                     <Grid

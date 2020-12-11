@@ -12,33 +12,25 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import { Context } from '../Store/Store';
-
+import { useSelector } from 'react-redux';
 
 
 
 function Party(props) {
-    const [state] = useContext(Context);
+    const signedIn = useSelector(state => state.signedIn);
+    const user = useSelector(state => state.user);
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
     const [parties, setParties] = useState([]);
 
     useEffect(() => {
-        if(state.signedIn) {
-            getAllParties().then(result => {
-                setParties(result.data);
-            }).catch((err) => {
-                setParties([]);
-            })
+        if(signedIn) {
+            console.log("Getting parties");
         } 
-    });
+    }, []);
 
     const handleCreate = () => {
-        createParty(name).then(result => {
-            console.log(result);
-        }).catch(err => {
-            console.log(err);
-        });
+        console.log("Creating party");
         handleClose();
     }
     const handleChange = (event) => setName(event.target.value);
@@ -53,7 +45,7 @@ function Party(props) {
     return (
         <span>
             <p>Party Creation and Viewer Screen</p>
-            {state.signedIn ? <p>Welcome {state.user.email}</p> : <p> Please log in or make an account to create or view your parties</p>}
+            {signedIn ? <p>Welcome {user.email}</p> : <p> Please log in or make an account to create or view your parties</p>}
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Create a Party
             </Button>

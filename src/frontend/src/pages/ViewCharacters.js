@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext }  from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -6,39 +7,20 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Context } from '../Store/Store';
-
 
 
 function ViewCharacters(props) {
-    const [state] = useContext(Context);
+    const user = useSelector(state => state.user);
+    const signedIn = useSelector(state => state.signedIn);
     const [characters, setCharacters] = useState([]);
 
     useEffect(() => {
-        console.log(state);
-        getAllCharacters().then(result => {
-            console.log(result.data);
-            setCharacters(result.data);
-        }).catch((err) => {
-            console.log(err);
-            setCharacters([]);
-        })
-    }, [state])
+        console.log("Getting characters")
+    }, [])
 
     // ideally we move all this to a seperate file or something
     const handleDelete = (id) => {
-        deleteCharacter(id).then(result => {
-            console.log('Delete successful')
-            // seperate function. maybe using global state? idk 
-            getAllCharacters().then(result => {
-                setCharacters(result.data);
-            }).catch((err) => {
-                console.log(err);
-                setCharacters([]);
-            })
-        }).catch(err => {
-            console.log(err);
-        });
+        console.log("Deleting charcters");
     }
     /**
      * For this...do we want to change it back to the way we had it
@@ -48,7 +30,7 @@ function ViewCharacters(props) {
      */
     return (
         <span>
-            {state.signedIn ? <p>Welcome {state.user.email}</p> : <p> If you are not logged in and you're on this page, please sign in</p>}
+            {signedIn ? <p>Welcome {user.email}</p> : <p> If you are not logged in and you're on this page, please sign in</p>}
             <p>View your characters</p>
             { characters.length === 0 ? <p> You don't have any characters</p> :
             <List>
