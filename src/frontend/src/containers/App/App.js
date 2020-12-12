@@ -3,6 +3,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/client'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
+import { state } from '../../Reducer/Reducer';
+import { characters } from '../../sagas';
+import { useDispatch } from 'react-redux';
+import { getUserData } from '../../util/util';
 
 
 // Use lazy loading here
@@ -15,6 +19,7 @@ const JoinParty = lazy(() => import('../../pages/JoinParty'));
 const SignInPage = lazy(() => import('../../pages/SignIn'));
 
 const App = () => {
+  const dispatch = useDispatch();
   /**
    * When we sign in, we should make required api calls and pass into state
    * that way, we don't have to make multiple api calls on pages
@@ -41,6 +46,9 @@ const App = () => {
     // clear the auth token from the storage
     client.authenticate().then(auth => {
       console.log('Sign in successful');
+      dispatch(state.actions.setUser(auth.user));
+      dispatch(state.actions.setSignedIn(true));
+      getUserData(dispatch);
     }).catch(() => {
       console.log('Sign in failed');
       
@@ -63,6 +71,9 @@ const App = () => {
       password
     }).then(auth => {
         console.log('setting props');
+        dispatch(state.actions.setUser(auth.user));
+        dispatch(state.actions.setSignedIn(true));
+        getUserData(dispatch);
         //gonna leave the "signIn" part out. Don't see why we need it
     }).catch(e => {
         console.log('You were not signed in');
@@ -72,7 +83,10 @@ const App = () => {
 
   const handleSignOut = () => {
     console.log('Signing out');
-    //client.logout().then(signOut({signedIn: false, user: {}}));
+    client.logout().then(() => {
+      dispatch(state.actions.signOut());
+      dispatch(characters.actions.clearCharacters());
+    });
   }
 
   return (

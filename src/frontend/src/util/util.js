@@ -56,3 +56,9 @@ export const rollStats = (stats) => {
     }
     return stats;
 }
+
+// function to set user data
+export const getUserData = (dispatch) => {
+    dispatch({type: 'GET_CHARACTERS'});
+    dispatch({type: 'GET_PARTIES'});
+}

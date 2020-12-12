@@ -42,7 +42,7 @@ export const state: any = createSlice<State, StateActions>({
     initialState: {
         user: {},
         signedIn: false,
-        onSignInPage: false
+        onSignedInPage: false
     },
     reducers: {
         signOut: (state) => {
@@ -53,6 +53,7 @@ export const state: any = createSlice<State, StateActions>({
             state.signedIn = payload;
         },
         setOnSignInPage: (state, payload) => {
+            console.log('setting onSignedInPage');
             state.onSignedInPage = payload;
         },
         setUser: (state, payload) => {

@@ -34,7 +34,7 @@ const create = async (context) => {
 
         const updatedUser = await context.app.service('users').get(context.params.connection.user._id).then(user => {
           user.characters.push({
-            id: result._id,
+            _id: result._id,
             name: result.character.description.name
           });
           return user;
@@ -53,7 +53,7 @@ const create = async (context) => {
       console.log(result);
       const updatedUser = await context.app.service('users').get(context.params.connection.user._id).then(user => {
         user.parties.push({
-          id: result._id,
+          _id: result._id,
           name: result.name,
           inviteURL: result.inviteURL
         });
@@ -65,8 +65,8 @@ const create = async (context) => {
         message: `Created party called ${result.name} with the id ${result._id}`,
         data: {
           name: result.name,
-          id: result._id,
-          inviteUrl: result.inviteURL,
+          _id: result._id,
+          inviteURL: result.inviteURL,
           members: result.members
         }
       };

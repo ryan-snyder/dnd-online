@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext }  from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,17 +10,25 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function ViewCharacters(props) {
-    const user = useSelector(state => state.user);
-    const signedIn = useSelector(state => state.signedIn);
-    const [characters, setCharacters] = useState([]);
+    const user = useSelector(state => state.userState.user);
+    const signedIn = useSelector(state => state.userState.signedIn);
+    const dispatch = useDispatch();
+    const characters = useSelector(state => state.characters);
 
     useEffect(() => {
-        console.log("Getting characters")
-    }, [])
-
+        console.log('Current list of characters is...');
+        console.log(characters);
+        
+    }, [characters]);
     // ideally we move all this to a seperate file or something
     const handleDelete = (id) => {
         console.log("Deleting charcters");
+        dispatch({
+            type: 'DELETE_CHARACTER',
+            payload: {
+                id
+            }
+        })
     }
     /**
      * For this...do we want to change it back to the way we had it

@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
  * TODO:
  * Create store here with saga middleware
  */
-console.log(Store.getState());
 ReactDOM.render(<Provider store={Store}><App /></Provider>, document.getElementById('root'));
 
 saga.run(mySaga); 

@@ -5,11 +5,13 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import client from '../feather/client';
 import { useForm } from "react-hook-form";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { state } from '../Reducer/Reducer';
 
 
 function SignIn(props) {
-    const onSignInPage = useSelector(state => state.onSignInPage);
+    const onSignInPage = useSelector(state => state.userState.onSignedInPage);
+    const dispatch = useDispatch(); 
     const { register, handleSubmit, errors } = useForm();
     const [error, setError] = useState({});
     const history = useHistory();
@@ -17,6 +19,8 @@ function SignIn(props) {
         setError({});
         console.log('created user');
         console.log('signing in');
+        dispatch(state.actions.setUser(user));
+        dispatch(state.actions.setSignedIn(true));
         history.push('/character');
     }).catch((e) => {
         setError({
@@ -25,7 +29,10 @@ function SignIn(props) {
     });
 
     useEffect(() => {
+        console.log('Setting onSignInPage...');
+        dispatch(state.actions.setOnSignInPage(true));
         return function cleanup() {
+            dispatch(state.actions.setOnSignInPage(false));
         }
    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);

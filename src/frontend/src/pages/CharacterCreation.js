@@ -20,7 +20,8 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { getClasses } from '../api';
 import { defaultCharacter, rollStats } from '../util/util';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { currentCharacter } from '../sagas';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -34,11 +35,15 @@ const useStyles = makeStyles(() => ({
   }));
 
 function CharacterCreation(props) {
-    const user = useSelector(state => state.user);
-    const signedIn = useSelector(state => state.signedIn);
+    const user = useSelector(state => state.userState.user);
+    const signedIn = useSelector(state => state.userState.signedIn);
+    const character = useSelector(state => state.currentCharacter.character);
+    const dispatch = useDispatch();
     const classes = useStyles();
     const { id, handleUpdate } = props;
     const [ options, setOptions ] = useState({});
+    const setCharacter = currentCharacter.actions.set;
+
 
     useEffect(() => {
         setOptions({
@@ -53,15 +58,7 @@ function CharacterCreation(props) {
      */
     // Should we remember stats on a page reload?
     // Or would they have to save it?
-    const [ character, setCharacter] = useState(defaultCharacter);
 
-    useEffect(() => {
-        console.log(props)
-        if(props.character) {
-            setCharacter(props.character);
-        }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.character]);
 
     const returnStats = (values) => Object.entries(character.stats.abilities).map((entry, index) => {
         entry[1] = values[index];
@@ -71,13 +68,17 @@ function CharacterCreation(props) {
     const handleUpdates = () => {
         handleUpdate(id, character);
     }
-
     const handleSave = () => {
         
         console.log(user);
         console.log(character);
         if(signedIn) {
             console.log('Creating character');
+            dispatch({type: 'CREATE_CHARACTER', payload: {
+                user,
+                character
+            }});
+
         } else {
             console.log('Show a snackbar or popup asking them to make an account...');
         }
@@ -85,12 +86,13 @@ function CharacterCreation(props) {
     // handle change for dropdown lists
     const handleChangeDropDown = (event) => {
         const value = options[event.target.name].find((val) => val.name === event.target.value);
-        setCharacter(oldCharacter => ({
-            ...oldCharacter,
+        dispatch(setCharacter({
+            character: {
+            ...character,
             [event.target.name]: value || {
                 name: ''
             }
-        }));
+        }}));
     }
 
     const handleChangeDescription = (event) => {
@@ -99,7 +101,7 @@ function CharacterCreation(props) {
             ...character.description,
             [event.target.name]: value || ''
         };
-        setCharacter({...character, description});
+        dispatch(setCharacter({character: {...character, description}}));
     }
 
     const handleShuffleUp = (index) => {
@@ -114,7 +116,7 @@ function CharacterCreation(props) {
         index === 0 ? values.push(shuffle) : values.splice(index-1, 0, shuffle);
         const stats = returnStats(values);
 
-        setCharacter({...character, stats: {abilities: Object.fromEntries(stats)} });
+        dispatch(setCharacter({character: {...character, stats: {abilities: Object.fromEntries(stats)} }}));
     }
 
     const handleShuffleDown = (index) => {
@@ -126,7 +128,7 @@ function CharacterCreation(props) {
 
         const stats = returnStats(values);
 
-        setCharacter({...character, stats: {abilities: Object.fromEntries(stats)}});
+        dispatch(setCharacter({character: {...character, stats: {abilities: Object.fromEntries(stats)}}}));
     }
     // Based off of dnd player handbook
     // which stats to roll 4 d6 and take the three highest values
@@ -135,7 +137,7 @@ function CharacterCreation(props) {
         // and then apply them to our object
         // We will then allow the user to either roll again,
         // or shift the values around
-        setCharacter({...character, stats: rollStats(character.stats)});
+        dispatch(setCharacter({character: {...character, stats: rollStats(character.stats)}}));
     }
     /**
      * All we want to do is make some basic stuff
@@ -231,7 +233,6 @@ function CharacterCreation(props) {
 }
 
 CharacterCreation.propTypes = {
-    character: PropTypes.object,
     handleUpdate: PropTypes.func,
     message: PropTypes.element,
     id: PropTypes.string,

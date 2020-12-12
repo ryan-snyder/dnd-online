@@ -12,25 +12,27 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import { useSelector } from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function Party(props) {
-    const signedIn = useSelector(state => state.signedIn);
-    const user = useSelector(state => state.user);
+    const signedIn = useSelector(state => state.userState.signedIn);
+    const user = useSelector(state => state.userState.user);
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
-    const [parties, setParties] = useState([]);
+    const parties = useSelector(state => state.parties);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        if(signedIn) {
-            console.log("Getting parties");
-        } 
-    }, []);
 
     const handleCreate = () => {
         console.log("Creating party");
+        dispatch({
+            type: 'CREATE_PARTY',
+            payload: {name}
+        })
         handleClose();
     }
     const handleChange = (event) => setName(event.target.value);
@@ -39,6 +41,14 @@ function Party(props) {
         setName('');
         setOpen(false)
     };
+    const handleDelete = (id) => {
+        dispatch({
+            type: 'DELETE_PARTY',
+            payload: {
+                id
+            }
+        })
+    }
     // Change party list to expansion panel?
     // So that you can see current members?
     // Or should you have to edit it in order to see that
@@ -87,7 +97,10 @@ function Party(props) {
                                 {`http://localhost:3000/join${party.inviteURL}`}
                             </ExpansionPanelDetails>
                             <ExpansionPanelActions>
-                                <Link to={`/party/${party.id}`}><Button>View Party</Button></Link>
+                                <Link to={`/party/${party._id}`}><Button>View Party</Button></Link>
+                                <IconButton onClick={() => handleDelete(party._id) } edge="end">
+                                            <DeleteIcon />
+                                </IconButton>
                             </ExpansionPanelActions>
                         </ExpansionPanel>
                     )

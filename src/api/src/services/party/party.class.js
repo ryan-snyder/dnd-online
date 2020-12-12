@@ -57,4 +57,10 @@ exports.Party = class Party extends Service {
       }
     });
   }
+
+  remove(id, params) {
+    const { user } = params;
+
+    return super.remove(id, params);
+  }
 };

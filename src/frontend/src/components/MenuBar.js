@@ -37,12 +37,14 @@ const useStyles = makeStyles({
  * Regardless, I don't care right now
  */
 function MenuBar(props) {
-    const signedIn = useSelector(state => state.signedIn);
-    const onSignInPage = useSelector(state => state.onSignInPage);
+    const signedIn = useSelector(state => state.userState.signedIn);
+    const onSignInPage = useSelector(state => state.userState.onSignedInPage);
     const classes = useStyles();
     const {handleLogIn, handleSignOut} = props;
     const [value, setValue ] = useState(0);
-
+    useEffect(() => {
+        console.log(signedIn);
+    }, [signedIn]);
     const handleChange = (event, index) => {
         props.history.push(`${event.currentTarget.getAttribute("to")}`);
         setValue(index);

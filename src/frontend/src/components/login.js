@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux';
 // seperate into multiple components????
 // one for actual sign up page, and one for menubar
 function Login(props) {
-    const signedIn = useSelector(state => state.signedIn);
-    const user = useSelector(state => state.user);
+    const signedIn = useSelector(state => state.userState.signedIn);
+    const user = useSelector(state => state.userState.user);
     const { handleLogIn, handleSignOut, classes } = props; 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

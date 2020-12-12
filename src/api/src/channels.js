@@ -49,19 +49,7 @@ module.exports = function(app) {
   app.on('logout', (authResult, { connection }) => {
     console.log('Logged out');
     if(connection) {
-      const user = connection.user;
-
-      app.channel('authenticated').leave(connection);
-
-      // when a user logs on, add the user to all of his party channels
-      console.log('Removing  user from the following rooms');
-      console.log(user.parties);
-      if(Array.isArray(user.parties)) user.parties.forEach(party => app.channel(`party/${party.id}`).leave(connection));
-
-      // as well, add him to his own channel. This will be used for stat tracking and so on
-      console.log(`Removing user from the users/${user._id} room`);
-      app.channel(`users/${user._id}`).leave(connection);
-
+      // On successful logout, connection is automatically removed from existing channels
       app.channel('anonymous').join(connection);
     }
   });
