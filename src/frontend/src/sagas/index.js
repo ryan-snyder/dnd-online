@@ -1,7 +1,6 @@
 // @flow
 import { call, put, putResolve, takeEvery, takeLatest } from 'redux-saga/effects'
-import { createTable, createReducerMap, createAction, createAssign, createSlice } from 'robodux';
-import produce from 'immer';
+import { createAssign, createSlice, createAction } from 'robodux';
 import Api from '../api';
 import { defaultCharacter } from '../util/util';
 

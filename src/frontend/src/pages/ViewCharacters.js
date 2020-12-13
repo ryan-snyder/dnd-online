@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext }  from 'react';
+import React, { useEffect }  from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useContext} from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import client from '../../feather/client'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -21,23 +21,8 @@ const SignInPage = lazy(() => import('../../pages/SignIn'));
 const App = () => {
   const dispatch = useDispatch();
   /**
-   * When we sign in, we should make required api calls and pass into state
-   * that way, we don't have to make multiple api calls on pages
-   * on pages that need it, we will make more in-depth calls to get further data
-   * So, on successful sign in state will be like so:
-   * state: {
-   * signedIn,
-   * user: id,
-   * characters: [
-   *  ids
-   * ],
-   * parties: [
-   *  ids
-   * ]
-   * }
-   * TODO:
-   * Hook up to redux-saga/redux
-   * Fetch characters/parties on first load
+   * TODO: Potentially move login logic into a saga as well?
+   * this would match our current pattern of never calling the api directly from a component/page
    */
   useEffect(() => {
     client.on('connected', data => console.log('event happened', data))

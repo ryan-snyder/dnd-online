@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 
 
-
+//TODO: Change this to match new patttern with sagas and redux stuff
 function JoinParty(props) {
     const signedIn = useSelector(state => state.signedIn);
     const id = useSelector(state => state.user._id);
@@ -31,6 +31,7 @@ function JoinParty(props) {
             console.log(err);
             setCharacters([]);
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleClickOpen = () => setOpen(true);

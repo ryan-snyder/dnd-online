@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CharacterCreation from './CharacterCreation';
 
 
 function CharacterEdit(props) {
     const { id } = props.match.params;
-    const character = useSelector(state => state.currentCharacter);
     const signedIn = useSelector(state => state.userState.signedIn);
     const dispatch = useDispatch();
 

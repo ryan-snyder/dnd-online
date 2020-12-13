@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,7 +19,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { getClasses } from '../api';
-import { defaultCharacter, rollStats } from '../util/util';
+import { rollStats } from '../util/util';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentCharacter } from '../sagas';
 

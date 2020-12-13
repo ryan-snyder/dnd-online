@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react';
+import React, {useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -52,6 +52,7 @@ function Party(props) {
     // Change party list to expansion panel?
     // So that you can see current members?
     // Or should you have to edit it in order to see that
+    // TODO: Add dropdown to select character or indicate that you are DM
     return (
         <span>
             <p>Party Creation and Viewer Screen</p>
