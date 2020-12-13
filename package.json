@@ -1,0 +1,13 @@
+{
+  "name": "dnd-project-temp",
+  "devDependencies": {
+    "flow-bin": "^0.139.0",
+    "flow-remove-types": "^2.139.0"
+  },
+  "scripts": {
+    "build": "flow-remove-types src/ -d dist/",
+    "prepublish": "yarn run build",
+    "start-backend": "cd lib/api && npm start",
+    "start-frontend": "cd lib/frontend && npm start"
+  }
+}

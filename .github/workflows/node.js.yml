@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 defaults:
   run:
-    working-directory: frontend
+    working-directory: src/frontend
 jobs:
   build:
 
