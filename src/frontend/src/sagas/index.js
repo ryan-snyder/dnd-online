@@ -82,9 +82,13 @@ interface CurrentCharacter {
 }
 
 interface Party {
+    name: string, 
     id: number,
     members: Array<Object>,
     inviteURL: string
+}
+interface CurrentParty {
+    currentParty: Party
 }
 
 interface Parties {
@@ -138,6 +142,17 @@ export const parties: any = createSlice<Parties, PartyActions>({
         clearParties: (state) => { state = []; },
     }
 });
+
+export const currentParty: any = createAssign<CurrentParty>({
+    name: 'currentParty',
+    initialState: {
+        party: null
+    }
+});
+
+const {
+    set: setCurrentParty,
+} = currentParty.actions;
 
 export const currentCharacter: any = createAssign<CurrentCharacter>({
     name: 'currentCharacter',
@@ -243,10 +258,22 @@ export function* onCreateParty(action: any): Generator<any, void, Party> {
     }
 }
 
+export function* onGetParty(action: any): Generator<any, void, Party> { 
+    try {
+        const resp: Party = yield call(Api.getParty, action.payload.id);
+        console.log('Got party');
+        console.log(resp);
+        yield put(setCurrentParty(resp));
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 export const getCharacter: any = createAction<string>('GET_CHARACTER');
 export const getCharacters: any = createAction<string>('GET_CHARACTERS');
 export const createCharacter: any = createAction<string>('CREATE_CHARACTER');
 export const getParties: any = createAction<string>('GET_PARTIES');
+export const getParty: any = createAction<string>('GET_PARTY');
 export const createParty: any = createAction<string>('CREATE_PARTY');
 export const deleteCharacter: any = createAction<string>('DELETE_CHARACTER');
 export const deleteParty: any = createAction<string>('DELETE_PARTY');
@@ -258,6 +285,7 @@ function* mySaga(): Generator<any, void, empty> {
     yield takeLatest(`${getParties}`, onGetParties);
     yield takeEvery(`${createCharacter}`, onCreateCharacter);
     yield takeEvery(`${createParty}`, onCreateParty);
+    yield takeEvery(`${getParty}`, onGetParty);
     yield takeEvery(`${deleteCharacter}`, onDeleteCharacter);
     yield takeEvery(`${deleteParty}`, onDeleteParty);
     yield takeEvery(`${updateCharacter}`, onUpdateCharacter);

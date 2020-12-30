@@ -20,7 +20,7 @@ export const getClasses = () => [
 const createCharacter = (character, user) => {
     console.log(character);
     console.log(user);
-    return client.service('characters').create(character, user);
+    return client.service('characters').create(character, { user });
 }
 
 const getCharacter = (id) => {
@@ -46,6 +46,10 @@ const createParty = (name) => {
     });
 }
 
+const getParty = (id) => {
+    return client.service('party').get(id);
+}
+
 const deleteParty = (id) => {
     console.log(id);
     return client.service('party').remove(id);
@@ -60,6 +64,7 @@ const Api = {
     getAllParties,
     createParty,
     deleteParty,
+    getParty
 };
 //export const getSpells = (query = {}) => superagent.get(`${baseUrl}spells`).query(query);
 //export const getFeatures = (query = {}) => superagent.get(`${baseUrl}features`).query(query);

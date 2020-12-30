@@ -1,4 +1,5 @@
 const { Service } = require('feathers-nedb');
+const logger = require('../../logger');
 
 exports.Party = class Party extends Service {
   
@@ -42,6 +43,13 @@ exports.Party = class Party extends Service {
     };
 
     return super.patch(id, party, params);
+  }
+
+  get(id, params) {
+    const { user } = params;
+    logger.info('Fetching party', id);
+
+    return super.get(id);
   }
 
   find(params) {

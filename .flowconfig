@@ -1,5 +1,6 @@
 [ignore]
-
+src/api/*
+*/node_modules
 [include]
 
 [libs]

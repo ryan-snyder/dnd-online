@@ -26,7 +26,7 @@ interface StateActions {
 export const state: any = createSlice<State, StateActions>({
     name: 'userState',
     initialState: {
-        user: {},
+        user: null,
         signedIn: false,
         onSignedInPage: false
     },

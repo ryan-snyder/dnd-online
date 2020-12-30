@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
@@ -98,7 +98,7 @@ function Party(props) {
                                 {`http://localhost:3000/join${party.inviteURL}`}
                             </ExpansionPanelDetails>
                             <ExpansionPanelActions>
-                                <Link to={`/party/${party._id}`}><Button>View Party</Button></Link>
+                                <Button component={RouterLink} to={`/party/${party._id}`}>View Party</Button>
                                 <IconButton onClick={() => handleDelete(party._id) } edge="end">
                                             <DeleteIcon />
                                 </IconButton>

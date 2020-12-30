@@ -16,6 +16,7 @@ const Party = lazy(() => import('../../pages/Party'));
 const ViewCharacters = lazy(() => import('../../pages/ViewCharacters'));
 const CharacterEdit = lazy(() => import('../../pages/CharacterEdit'));
 const JoinParty = lazy(() => import('../../pages/JoinParty'));
+const ViewParty = lazy(() => import('../../pages/ViewParty'));
 const SignInPage = lazy(() => import('../../pages/SignIn'));
 
 const App = () => {
@@ -81,13 +82,14 @@ const App = () => {
             <Menu handleLogIn={handleLogIn} handleSignOut={handleSignOut}/>
             <ul>
               <Switch>
-                <Route exact path="/join/:invite">
+                <Route path="/join/:invite">
                   {({ match }) => <JoinParty match={match}/> }
                 </Route>
-                <Route path="/party">
+                <Route exact path="/party">
                   <Party />
                 </Route>
-                <Route exact path="/party/:id">
+                <Route path="/party/:id">
+                  {({ match }) => <ViewParty match={match}/>}
                 </Route>
                 <Route exact path="/character">
                   <CharacterCreation />

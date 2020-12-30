@@ -2,7 +2,7 @@
 import { state } from '../Reducer/Reducer';
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import { characters, currentCharacter, parties } from '../sagas';
+import { characters, currentCharacter, parties, currentParty } from '../sagas';
 import { createReducerMap } from 'robodux';
 import logger from 'redux-logger';
 /**
@@ -12,7 +12,7 @@ import logger from 'redux-logger';
 
 export const saga = createSagaMiddleware(); 
 
-const reducerObject = createReducerMap(state, characters, currentCharacter, parties);
+const reducerObject = createReducerMap(state, characters, currentCharacter, parties, currentParty);
 
 const reducer = combineReducers(reducerObject);
 
